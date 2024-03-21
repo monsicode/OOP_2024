@@ -63,23 +63,23 @@ public:
        countRows++;
     }
 
-    int getMaxSizeForCol()
-    {
-       for(int i = 0; i < countRows; i++)
-       {
-           for(int j = 0; j <  maxCountColl; j++) {
-               rows[i].getFieldSizeAtCol(1);
-           }
-       }
+//    int getMaxSizeForCol()
+//    {
+//       for(int i = 0; i < countRows; i++)
+//       {
+//           for(int j = 0; j <  maxCountColl; j++) {
+//               rows[i].getFieldSizeAtCol(1);
+//           }
+//       }
+//
+//    }
 
-    }
-
-    int findCountColls() const
-    {
-        for(int i = 0; i < countRows; i++) {
-
-        }
-    };
+//    int findCountColls() const
+//    {
+//        for(int i = 0; i < countRows; i++) {
+//
+//        }
+//    };
 
     void addFieldToRow(const char* str)
     {
@@ -287,8 +287,4 @@ int main() {
 
 
     }
-
-
-
-
 }
