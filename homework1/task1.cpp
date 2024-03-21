@@ -8,46 +8,66 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-//int maxCountColl = 0;
-
-bool flagTableTag = false;
-
 constexpr int maxFieldRows = 10;
+constexpr int maxFileSize =75000;
+constexpr int maxRowSize = 750;
 
 typedef char FIELD[50];
 
 class Row{
-    FIELD row[10] ;
+    FIELD row[10];
     int countCols = 0;
 
 public:
+
+    //look for a better way to initiallize empty char[]
     Row(){
-        strcat(row[countCols] ,"");
+        //strcat(row[countCols] ,"");
+        row[countCols][0] = '\0';
     }
 
     void addField(const char* field)
     {
         strcpy(row[countCols],field);
         countCols++;
+    }
 
-//        if(maxCountColl < countCols)
-//            maxCountColl = countCols;
+    //testing
+    void addEmpty()
+    {
+        countCols++;
+    }
+
+    void addSpecialField(const char* field)
+    {
+        strcpy(row[countCols],"*");
+        strcat(row[countCols],field);
+        strcat(row[countCols],"*");
+        countCols++;
     }
 
     void printRow() const{
+        //cout<<"|";
         for(int i = 0; i < countCols; i++)
-                 cout<<row[i]<<" | ";
+            cout<<row[i]<<" | ";
     }
 
     int getCountCol() const{
         return countCols;
     }
 
-    int getFieldSizeAtCol(int col)
+    int getFieldSizeAtCol(int col) const
     {
         return strlen(row[col]);
     }
 
+    void printField(int col)const{
+        cout<<row[col];
+    }
+
+    const FIELD& getFieldAtCol(int col) const {
+        return row[col];
+    }
 
 
 };
@@ -55,236 +75,164 @@ public:
 class Table{
     Row rows[10];
     size_t countRows = -1;
-    int maxSizeForCol[10];
 
-public:
-    void addRow()
+    int maxSpacesForEachColl[10]{0};
+    int maxCountColl = 0;
+
+    void findMaxCountColl()
     {
-       countRows++;
+        for(int i = 0; i < 10; i++)
+        {
+            if(rows[i].getCountCol() > maxCountColl)
+                maxCountColl = rows[i].getCountCol();
+        }
+    }
+    void findMaxSpacesForEachColl()
+    {
+        for(int i = 0; i < 10; i++)//for the coll
+        {
+            for(int j = 0; j < maxCountColl; j++) // for the rows
+            {
+                if( maxSpacesForEachColl[i] < rows[j].getFieldSizeAtCol(i))
+                      maxSpacesForEachColl[i] = rows[j].getFieldSizeAtCol(i);
+            }
+        }
     }
 
-//    int getMaxSizeForCol()
-//    {
-//       for(int i = 0; i < countRows; i++)
-//       {
-//           for(int j = 0; j <  maxCountColl; j++) {
-//               rows[i].getFieldSizeAtCol(1);
-//           }
-//       }
-//
-//    }
+public:
 
-//    int findCountColls() const
-//    {
-//        for(int i = 0; i < countRows; i++) {
-//
-//        }
-//    };
+    Table(){}
 
-    void addFieldToRow(const char* str)
+    void read()
+    {
+        findMaxCountColl();
+        findMaxSpacesForEachColl();
+    }
+
+    void addRow()
+    {
+        countRows++;
+    }
+
+    void addSpecialField(const char* str)
+    {
+      rows[countRows].addSpecialField(str);
+    }
+
+    void addField(const char* str)
     {
         rows[countRows].addField(str);
     }
 
     //????? zashto + 1 za printa bachka
     void print() const{
-        for (int i = 0; i < countRows + 1; i++)
+        for (int i = 0; i < countRows + 1; i++)// rows
         {
-            rows[i].printRow();
-            cout << std::endl;
+            for (int j = 0; j < maxCountColl; j++)//coll
+            {
+                if(strcmp(rows[i].getFieldAtCol(j),"") != 0){
+                    rows[i].printField(j);
+                }// print field
+
+                int neededSpaces = maxSpacesForEachColl[j] - rows[i].getFieldSizeAtCol(j);
+
+                for(int s = 0; s < neededSpaces; s++) {
+                    cout << " ";
+                }
+                cout<<"|";
+            }
+           cout << std::endl;
         }
     }
 
-    size_t getCountRows() const{
-        return countRows;
+    void implementTag(char tag, const char* str)
+    {
+        switch (tag){
+            case 'r' :addRow(); break;
+            case 'h' : addSpecialField(str); break;
+            case 'd' : addField(str); break;
+        }
     }
+
+    //tester
+    void printSpacesCol()
+    {
+        for(int i = 0; i < maxCountColl; i++)
+        {
+            cout<<"col:"<<i<<" maxSpaces:"<<maxSpacesForEachColl[i] <<"\n";
+        }
+    }
+
 };
 
-
-//good for now
-bool isOnlyTag(const char* tag)
+void getFileAsString(const char* fileName, char* wholeFile)
 {
-    if(strcmp(tag,"<table>") == 0 || strcmp(tag,"</table>") == 0 || strcmp(tag,"<tr>") == 0 || strcmp(tag,"</tr>") == 0 ||
-       strcmp(tag,"<td>") == 0 || strcmp(tag,"</td>") == 0 || strcmp(tag,"<th>") == 0 || strcmp(tag,"</th>") == 0)
-        return true;
+    std::ifstream ifs(fileName);
 
-    return false;
-}
-bool isOnlyString(const char* str)
-{
-    int sizeStr = strlen(str);
-    if(str[0] != '<' && str[sizeStr - 1] != '>')
-        return true;
-    return false;
-}
-
-
-int  countOpeningTags(const char* line)
-{
-    int count = 0;
-    for(int i = 0; i < strlen(line); i++)
+    if(!ifs.is_open())
     {
-        if(line[i] == '<' )
-            count++;
+       return ;
     }
-    return count;
-}
-int  countClosingTags(const char* line)
-{
-    int count = 0;
-    for(int i = 0; i < strlen(line); i++)
-    {
-        if(line[i] == '/' )
-            count++;
-    }
-    return count;
-}
 
-//other tag functons
-int checkTag(const char* tag)
-{
-    if(strcmp(tag,"<tr") == 0 || strcmp(tag,"</tr") == 0)
-       return 1;
-    else if(strcmp(tag,"<th") == 0 || strcmp(tag,"</th") == 0)
-        return 2;
-    else if(strcmp(tag,"<td") == 0 || strcmp(tag,"</td") == 0)
-        return 3;
-}
-
-//chlen func to table
-void implementTag(int tag, const char* str, Table& table)
-{
-    switch (tag){
-        case 1 : table.addRow(); return;
-        case 2 : table.addFieldToRow(str); return;
-        case 3 : table.addFieldToRow(str); return;
-    }
-    return;
-}
-
-//reading a line
-void readLineHelper(char* line)
-{
-    std::stringstream ss(line);
-
-    while (!ss.eof()) {
-        ss.get(line, 20, '>');
-
-        if(strcmp(line,"<tr") == 0 || strcmp(line,"</th"))
-            cout<<"newLIne ";
-        else if(strcmp(line,"<th") == 0 || strcmp(line,"</th"))
-            cout<<'*';
-
-        ss.get(line, 20, '<');
-
-        //table.addRow(line);
-        cout << line << "\n";
-    }
-}
-
-void readLine(std::ifstream& ifs)
-{
-    char line[100];
-    ifs.getline(line, 100);
-
-//    isOnlyTag(line);
-//    isOnlyString(line);
-
-   int countTags = countOpeningTags(line);
-   int closingTags = countClosingTags(line);
-
-   //if many tags are on the same line
-   if(countTags - closingTags > 1)
-   {
-       if(!flagTableTag)
-       {
-           char newLine[100];
-           flagTableTag = true;
-           strcpy(newLine, line + 7);
-           cout<<newLine;
-
-           readLineHelper(newLine);
-       }
-
-       else
-       {
-           readLineHelper(line);
-       }
-   }
-
-   readLineHelper(line);
-}
-
-void readFile(const char* fileName)
-{
-
-}
-
-
-int main() {
-//
-//    Table table;
- //  readFile("file.txt");
-//    table.print();
-
-    std::ifstream ifs("file.txt");
-
-    char wholeFile[1024] = "";
-
-    char buff[1024];
-    while(ifs.getline(buff, 1024))
+    char buff[maxRowSize];
+    while(ifs.getline(buff,maxRowSize))
     {
         std::stringstream ss(buff);
+        char line[maxRowSize];
 
-        char line[100];
         while(!ss.eof())
         {
-            ss.getline(line, 100, '>');
-//            if(strcmp(line, "<th") == 0 || strcmp(line, "<td") == 0)
-//                cout<<"special treatment";
-            strcat(wholeFile,line);
+            ss.getline(line, maxRowSize, '>');
+            strcat(wholeFile, line);
         }
     }
 
-
+    ifs.close();
+}
+void removeSpaces(char* wholeFile)
+{
     std::stringstream ss(wholeFile);
-
     char result [1024] = "";
-   // cout<<wholeFile;
+
     while(!ss.eof())
-        {
-            char line[100];
-            ss.getline(line, 100, ' ');
+    {
+        char line[100];
+        ss.getline(line, 100, ' ');
 
-            if(strcmp(line, "") == 0)
-                continue;
+        if(strcmp(line, "") == 0)
+            continue;
 
-           strcat(result, line);
+        strcat(result, line);
 
-           ss.clear();
+        //needs check
+        ss.clear();
     }
+    strcpy(wholeFile,result);
+}
+Table readTableFromFile(const char* fileName)
+{
+    Table table;
 
-    std::stringstream sstream(result);
+    char wholeFile[maxFileSize] = "";
+    getFileAsString(fileName, wholeFile);
+    removeSpaces(wholeFile);
+
+    std::stringstream sstream(wholeFile);
     while(!sstream.eof())
     {
         char word[100];
         sstream.getline(word, 100, '<');
 
-
-        if(word[1] == 'h')
-        {
-            cout<<'*'<<word + 2 <<'*'<<" | ";
-        }
-        else if(word[1] == 'd')
-        {
-            cout<<word + 2 <<" | ";
-        }
-        else if(word[1] == 'r')
-        {
-            cout<<endl;
-        }
-       //else cout<<word<<"\n";
-
-
+        table.implementTag(word[1],word + 2);
     }
+
+    return table;
+};
+
+int main() {
+
+    Table table = readTableFromFile("file.txt");
+    table.read();
+    table.print();
+
 }
