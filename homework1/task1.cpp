@@ -21,9 +21,11 @@ class Row{
 public:
 
     //look for a better way to initiallize empty char[]
-    Row(){
-        //strcat(row[countCols] ,"");
-        row[countCols][0] = '\0';
+       Row() {
+        for(int i = 0; i < 10 ; i++)
+        {
+            strcpy(row[i] ,"");
+        }
     }
 
     void addField(const char* field)
