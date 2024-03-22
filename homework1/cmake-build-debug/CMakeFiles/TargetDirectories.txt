@@ -1,0 +1,3 @@
+C:/Users/Monika/Documents/OOP_2024/CLion/HW1/try2HW1/cmake-build-debug/CMakeFiles/try2HW1.dir
+C:/Users/Monika/Documents/OOP_2024/CLion/HW1/try2HW1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Monika/Documents/OOP_2024/CLion/HW1/try2HW1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

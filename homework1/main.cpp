@@ -18,10 +18,8 @@ class Row{
     FIELD row[10];
     int countCols = 0;
 
-public:
-
-    //look for a better way to initiallize empty char[]
-       Row() {
+public:exit
+    Row() {
         for(int i = 0; i < 10 ; i++)
         {
             strcpy(row[i] ,"");
@@ -101,15 +99,18 @@ class Table{
         }
     }
 
+
 public:
 
     Table(){}
 
+    //remove later
     void read()
     {
         findMaxCountColl();
         findMaxSpacesForEachColl();
     }
+
 
     void addRow()
     {
@@ -141,6 +142,7 @@ public:
                 for(int s = 0; s < neededSpaces; s++) {
                     cout << " ";
                 }
+
                 cout<<"|";
             }
            cout << std::endl;
@@ -211,6 +213,8 @@ void removeSpaces(char* wholeFile)
     }
     strcpy(wholeFile,result);
 }
+
+//add in class table
 Table readTableFromFile(const char* fileName)
 {
     Table table;
@@ -228,13 +232,13 @@ Table readTableFromFile(const char* fileName)
         table.implementTag(word[1],word + 2);
     }
 
+    table.read();
     return table;
 };
 
 int main() {
 
     Table table = readTableFromFile("file.txt");
-    table.read();
     table.print();
 
 }
