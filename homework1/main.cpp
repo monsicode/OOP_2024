@@ -1,186 +1,22 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <cstring>
 #include "Row.h"
+#include "Table.h"
+
 #pragma warning (disable:4996);
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-constexpr int maxFieldRows = 10;
-constexpr int maxFileSize =75000;
-constexpr int maxRowSize = 750;
 
 //typedef char FIELD[50];
-class Table{
-    Row rows[10];
-    size_t countRows = -1;
 
-    int maxSpacesForEachColl[10]{0};
-    int maxCountColl = 0;
-
-    void findMaxCountColl()
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            if(rows[i].getCountCol() > maxCountColl)
-                maxCountColl = rows[i].getCountCol();
-        }
-    }
-    void findMaxSpacesForEachColl()
-    {
-        for(int i = 0; i < 10; i++)//for the coll
-        {
-            for(int j = 0; j < maxCountColl; j++) // for the rows
-            {
-                if( maxSpacesForEachColl[i] < rows[j].getFieldSizeAtCol(i))
-                      maxSpacesForEachColl[i] = rows[j].getFieldSizeAtCol(i);
-            }
-        }
-    }
-
-
-public:
-
-    Table(){}
-
-    //remove later
-    void read()
-    {
-        findMaxCountColl();
-        findMaxSpacesForEachColl();
-    }
-
-
-    void addRow()
-    {
-        countRows++;
-    }
-
-    void addSpecialField(const char* str)
-    {
-      rows[countRows].addSpecialField(str);
-    }
-
-    void addField(const char* str)
-    {
-        rows[countRows].addField(str);
-    }
-
-    //????? zashto + 1 za printa bachka
-    void print() const{
-        for (int i = 0; i < countRows + 1; i++)// rows
-        {
-            for (int j = 0; j < maxCountColl; j++)//coll
-            {
-                if(strcmp(rows[i].getFieldAtCol(j),"") != 0){
-                    rows[i].printField(j);
-                }// print field
-
-                int neededSpaces = maxSpacesForEachColl[j] - rows[i].getFieldSizeAtCol(j);
-
-                for(int s = 0; s < neededSpaces; s++) {
-                    cout << " ";
-                }
-
-                cout<<"|";
-            }
-           cout << std::endl;
-        }
-    }
-
-    void implementTag(char tag, const char* str)
-    {
-        switch (tag){
-            case 'r' :addRow(); break;
-            case 'h' : addSpecialField(str); break;
-            case 'd' : addField(str); break;
-        }
-    }
-
-    //tester
-    void printSpacesCol()
-    {
-        for(int i = 0; i < maxCountColl; i++)
-        {
-            cout<<"col:"<<i<<" maxSpaces:"<<maxSpacesForEachColl[i] <<"\n";
-        }
-    }
-
-};
-
-void getFileAsString(const char* fileName, char* wholeFile)
-{
-    std::ifstream ifs(fileName);
-
-    if(!ifs.is_open())
-    {
-       return ;
-    }
-
-    char buff[maxRowSize];
-    while(ifs.getline(buff,maxRowSize))
-    {
-        std::stringstream ss(buff);
-        char line[maxRowSize];
-
-        while(!ss.eof())
-        {
-            ss.getline(line, maxRowSize, '>');
-            strcat(wholeFile, line);
-        }
-    }
-
-    ifs.close();
-}
-void removeSpaces(char* wholeFile)
-{
-    std::stringstream ss(wholeFile);
-    char result [1024] = "";
-
-    while(!ss.eof())
-    {
-        char line[100];
-        ss.getline(line, 100, ' ');
-
-        if(strcmp(line, "") == 0)
-            continue;
-
-        strcat(result, line);
-
-        //needs check
-        ss.clear();
-    }
-    strcpy(wholeFile,result);
-}
-
-//add in class table
-Table readTableFromFile(const char* fileName)
-{
-    Table table;
-
-    char wholeFile[maxFileSize] = "";
-    getFileAsString(fileName, wholeFile);
-    removeSpaces(wholeFile);
-
-    std::stringstream sstream(wholeFile);
-    while(!sstream.eof())
-    {
-        char word[100];
-        sstream.getline(word, 100, '<');
-
-        table.implementTag(word[1],word + 2);
-    }
-
-    table.read();
-    return table;
-};
 
 int main() {
 
-    Table table = readTableFromFile("file.txt");
+    Table table ("newTable3.txt");
     table.print();
+
+    //table.saveTable("newTable3.txt");
+
 
 }
