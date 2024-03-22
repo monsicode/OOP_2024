@@ -1,8 +1,11 @@
 #pragma once
+#pragma warning (disable:4996);
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstring>
 #include "Row.h"
-#pragma warning (disable:4996);
+
 
 class Table{
     Row rows[10];
@@ -14,9 +17,16 @@ class Table{
     void findMaxCountColl();
     void findMaxSpacesForEachColl();
 
+    void getFileAsString(const char* fileName, char* wholeFile);
+    void removeTabulation(char* wholeFile);
+
 public:
 
+    void readTableFromFile(const char* fileName);
+
     Table();
+
+    Table(const char* fileName);
 
     //remove later
     void read();
@@ -34,4 +44,7 @@ public:
 
     //tester
     void printSpacesCol();
+
+    void saveTable(const char* fileName);
+
 };

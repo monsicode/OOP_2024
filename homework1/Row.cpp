@@ -50,3 +50,26 @@ const FIELD& Row::getFieldAtCol(int col) const {
     return row[col];
 }
 
+void Row::saveRow(std::ofstream& ofs)
+{
+    ofs <<"  "<< "<tr>" << endl;
+    for(int i = 0; i < countCols ; i++)
+    {
+        if(row[i][0] == '*')
+        {
+            size_t length = strlen(row[i]) - 1;
+            char substring[length - 1];
+            strncpy(substring, row[i] + 1, length - 1);
+            substring[length - 1] = '\0';
+
+            ofs <<"    "<< "<th>" <<substring <<"</th>"<< endl;
+        }
+
+        else
+        {
+            ofs <<"    "<< "<td>" << row[i] <<"</td>"<< endl;
+        }
+    }
+    ofs <<"  "<< "</tr>" << endl;
+}
+

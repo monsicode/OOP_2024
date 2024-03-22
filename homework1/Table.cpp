@@ -1,4 +1,7 @@
 #include "Table.h"
+#include "Constants.h"
+
+using namespace constants;
 
 void Table::findMaxCountColl()
 {
@@ -22,6 +25,11 @@ void Table::findMaxSpacesForEachColl()
 
 
 Table::Table(){}
+
+Table::Table(const char* fileName)
+{
+    readTableFromFile(fileName);
+};
 
 //remove later
 void Table::read()
@@ -84,4 +92,93 @@ void Table::printSpacesCol()
     {
         cout<<"col:"<<i<<" maxSpaces:"<<maxSpacesForEachColl[i] <<"\n";
     }
+}
+
+
+
+void Table::getFileAsString(const char* fileName, char* wholeFile)
+{
+    std::ifstream ifs(fileName);
+
+    if(!ifs.is_open())
+    {
+        return ;
+    }
+
+    char buff[maxRowSize];
+    while(ifs.getline(buff,maxRowSize))
+    {
+        std::stringstream ss(buff);
+        char line[maxRowSize];
+
+        while(!ss.eof())
+        {
+            ss.getline(line, maxRowSize, '>');
+            strcat(wholeFile, line);
+        }
+    }
+
+    ifs.close();
+}
+
+void Table:: removeTabulation(char* wholeFile)
+{
+    std::stringstream ss(wholeFile);
+    char result [1024] = "";
+
+    while(!ss.eof())
+    {
+        char line[100];
+        ss.getline(line, 100, '\t');
+
+        if(strcmp(line, "") == 0)
+            continue;
+
+        strcat(result, line);
+
+        //needs check
+        ss.clear();
+    }
+    strcpy(wholeFile,result);
+}
+
+
+void Table::readTableFromFile(const char* fileName)
+{
+    char wholeFile[maxFileSize] = "";
+    getFileAsString(fileName, wholeFile);
+    removeTabulation(wholeFile);
+
+    std::stringstream sstream(wholeFile);
+    while(!sstream.eof())
+    {
+        char word[100];
+        sstream.getline(word, 100, '<');
+
+        implementTag(word[1],word + 2);
+    }
+
+   this->read();
+};
+
+void Table::saveTable(const char* fileName)
+{
+    std::ofstream ofs(fileName, std::ios::app);
+
+    if(!ofs.is_open())
+    {
+        cout << "Error saving the table!" <<endl;
+        return;
+    }
+
+    ofs<<"<table>"<<endl;
+
+    for(int i = 0; i < countRows + 1; i++)
+    {
+        rows[i].saveRow(ofs);
+    }
+
+    ofs<<"</table>"<<endl;
+
+    ofs.close();
 }

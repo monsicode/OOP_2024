@@ -1,8 +1,11 @@
 #pragma once
+#pragma warning (disable:4996);
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include "Constants.h"
 
-#pragma warning (disable:4996);
+using namespace constants;
 
 using std::cout;
 using std::endl;
@@ -18,7 +21,7 @@ public:
     Row();
 
     void addField(const char* field);
-    
+
     //testing
     void addEmpty();
 
@@ -34,4 +37,5 @@ public:
 
     const FIELD& getFieldAtCol(int col) const ;
 
+    void saveRow(std::ofstream& ofs);
 };
