@@ -15,33 +15,30 @@ void Table::findMaxSpacesForEachColl()
 {
     for(int i = 0; i < 10; i++)//for the coll
     {
-        for(int j = 0; j < maxCountColl; j++) // for the rows
-        {
-            if( maxSpacesForEachColl[i] < rows[j].getFieldSizeAtCol(i))
-                maxSpacesForEachColl[i] = rows[j].getFieldSizeAtCol(i);
-        }
+           findMaxSpacesForCol(i);
     }
 }
 
+void Table::findMaxSpacesForCol(int numCol)
+{
+    int col = numCol -1;
+    for(int i = 0; i < 10; i++)
+    {
+        if (maxSpacesForEachColl[col] < rows[i].getFieldSizeAtCol(col))
+            maxSpacesForEachColl[col] = rows[i].getFieldSizeAtCol(col);
+    }
+}
 
-Table::Table(){}
 
 Table::Table(const char* fileName)
 {
     readTableFromFile(fileName);
 };
 
-//remove later
-void Table::read()
-{
-    findMaxCountColl();
-    findMaxSpacesForEachColl();
-}
-
-
 void Table::addRow()
 {
     countRows++;
+    isThere[countRows] = true;
 }
 
 void Table::addSpecialField(const char* str)
@@ -54,22 +51,20 @@ void Table::addField(const char* str)
     rows[countRows].addField(str);
 }
 
-//????? zashto + 1 za printa bachka
 void Table::print() const{
     for (int i = 0; i < countRows + 1; i++)// rows
     {
+        if(!isThere[i])
+            continue;
+
         for (int j = 0; j < maxCountColl; j++)//coll
         {
-            if(strcmp(rows[i].getFieldAtCol(j),"") != 0){
-                rows[i].printField(j);
-            }// print field
-
+            rows[i].printField(j);
             int neededSpaces = maxSpacesForEachColl[j] - rows[i].getFieldSizeAtCol(j);
 
             for(int s = 0; s < neededSpaces; s++) {
                 cout << " ";
             }
-
             cout<<"|";
         }
         cout << std::endl;
@@ -84,17 +79,6 @@ void Table::implementTag(char tag, const char* str)
         case 'd' : addField(str); break;
     }
 }
-
-//tester
-void Table::printSpacesCol()
-{
-    for(int i = 0; i < maxCountColl; i++)
-    {
-        cout<<"col:"<<i<<" maxSpaces:"<<maxSpacesForEachColl[i] <<"\n";
-    }
-}
-
-
 
 void Table::getFileAsString(const char* fileName, char* wholeFile)
 {
@@ -158,8 +142,18 @@ void Table::readTableFromFile(const char* fileName)
         implementTag(word[1],word + 2);
     }
 
-   this->read();
+    findMaxCountColl();
+    findMaxSpacesForEachColl();
 };
+
+void Table::remove(int rowNumber)
+{
+    rows[rowNumber - 1].deleteRow();
+    isThere[rowNumber - 1] = false;
+
+    findMaxCountColl();
+    findMaxSpacesForEachColl();
+}
 
 void Table::saveTable(const char* fileName)
 {
@@ -175,10 +169,18 @@ void Table::saveTable(const char* fileName)
 
     for(int i = 0; i < countRows + 1; i++)
     {
-        rows[i].saveRow(ofs);
+        if(isThere[i])
+            rows[i].saveRow(ofs);
     }
 
     ofs<<"</table>"<<endl;
 
     ofs.close();
+}
+
+//optimisation for padding
+void Table::edit(int rowNum, int colNum, const char* newVal)
+{
+    rows[rowNum - 1].setFieldAtCol(colNum - 1,newVal);
+    findMaxSpacesForCol(colNum);
 }

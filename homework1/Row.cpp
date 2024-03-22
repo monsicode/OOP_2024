@@ -50,6 +50,11 @@ const FIELD& Row::getFieldAtCol(int col) const {
     return row[col];
 }
 
+void Row::setFieldAtCol(int numCol, const char* val)
+{
+    strcpy(row[numCol],val);
+}
+
 void Row::saveRow(std::ofstream& ofs)
 {
     ofs <<"  "<< "<tr>" << endl;
@@ -73,3 +78,10 @@ void Row::saveRow(std::ofstream& ofs)
     ofs <<"  "<< "</tr>" << endl;
 }
 
+void Row::deleteRow()
+{
+    for(int i = 0; i < countCols; i++)
+    {
+        strcpy(row[i],"");
+    }
+}

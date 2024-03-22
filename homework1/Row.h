@@ -38,4 +38,9 @@ public:
     const FIELD& getFieldAtCol(int col) const ;
 
     void saveRow(std::ofstream& ofs);
+
+    void deleteRow();
+
+    void setFieldAtCol(int numCol, const char* val);
+
 };

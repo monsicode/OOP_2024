@@ -8,15 +8,14 @@ using std::endl;
 using std::cin;
 
 
-//typedef char FIELD[50];
-
-
 int main() {
 
-    Table table ("newTable3.txt");
+     Table table ("file.txt");
+     table.print();
+     table.add(5);
     table.print();
 
-    //table.saveTable("newTable3.txt");
+     table.saveTable("newTable2.txt");
 
 
 }
