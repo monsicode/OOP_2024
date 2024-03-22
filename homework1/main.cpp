@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
+#include "Row.h"
 #pragma warning (disable:4996);
 
 using std::cout;
@@ -12,66 +13,7 @@ constexpr int maxFieldRows = 10;
 constexpr int maxFileSize =75000;
 constexpr int maxRowSize = 750;
 
-typedef char FIELD[50];
-
-class Row{
-    FIELD row[10];
-    int countCols = 0;
-
-public:
-    Row() {
-        for(int i = 0; i < 10 ; i++)
-        {
-            strcpy(row[i] ,"");
-        }
-    }
-
-    void addField(const char* field)
-    {
-        strcpy(row[countCols],field);
-        countCols++;
-    }
-
-    //testing
-    void addEmpty()
-    {
-        countCols++;
-    }
-
-    void addSpecialField(const char* field)
-    {
-        strcpy(row[countCols],"*");
-        strcat(row[countCols],field);
-        strcat(row[countCols],"*");
-        countCols++;
-    }
-
-    void printRow() const{
-        //cout<<"|";
-        for(int i = 0; i < countCols; i++)
-            cout<<row[i]<<" | ";
-    }
-
-    int getCountCol() const{
-        return countCols;
-    }
-
-    int getFieldSizeAtCol(int col) const
-    {
-        return strlen(row[col]);
-    }
-
-    void printField(int col)const{
-        cout<<row[col];
-    }
-
-    const FIELD& getFieldAtCol(int col) const {
-        return row[col];
-    }
-
-
-};
-
+//typedef char FIELD[50];
 class Table{
     Row rows[10];
     size_t countRows = -1;
