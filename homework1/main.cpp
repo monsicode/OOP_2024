@@ -18,7 +18,7 @@ class Row{
     FIELD row[10];
     int countCols = 0;
 
-public:exit
+public:
     Row() {
         for(int i = 0; i < 10 ; i++)
         {
