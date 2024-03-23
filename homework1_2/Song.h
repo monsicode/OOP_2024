@@ -15,10 +15,6 @@ class Song{
 
 public:
 
-//    Song(const char* name, size_t hours, size_t min, size_t seconds, const char* genre, const Content& content): genre(genre), contentSong(content){
-//        strcpy(this->name, name);
-//    }
-
     void addToSong(const char* name, size_t hours, size_t min, size_t seconds, const char* str){
         strcpy(this->name, name);
         time.setHours(hours);
@@ -31,5 +27,31 @@ public:
    {
      contentSong.readFrom(fileName);
    }
+
+   void printSong() const
+   {
+       std::cout<<name<< " " ;
+       time.serialize(std::cout);
+       genre.printGenre();
+   }
+
+   const char* getName() const
+   {
+    return name;
+   }
+
+   char getGenreSong() const{
+        return genre.getGenre();
+    }
+
+    void mixSong(const Song& s2)
+    {
+        contentSong.mixWith(s2.contentSong);
+    }
+
+    void saveTo(const char* fileName)
+    {
+        contentSong.saveTo(fileName);
+    }
 
 };

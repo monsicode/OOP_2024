@@ -28,16 +28,60 @@ public:
         countSongs++;
     }
 
-    void print() const;
+    void print() const{
+        for (int i = 0; i < countSongs; ++i) {
+            songs[i].printSong();
+        }
+    }
 
-    void find(const Song& song) const;
+    size_t find(const char* sName) const {
 
-    void findGenre(char genre) const;
+        for (int i = 0; i < countSongs; ++i) {
+            if (strcmp(songs[i].getName(), sName) == 0) {
+                //songs[i].printSong();
+                return i;
+                break;
+            }
+        }
+        return -1;
+    }
 
-    void mix(const Song& s1, const Song& s2);
+    void findGenre(const char* genre) const{
+        Genre temp(genre);
 
-    void save(const Song& song, const char* fileName);
+        for (int i = 0; i < countSongs; ++i) {
+            if (songs[i].getGenreSong() == temp.getGenre()){
+                songs[i].printSong();
+                break;
+            }
+        }
+    }
 
+    void mix(const char* s1,const char* s2){
+
+       size_t pos1 = find(s1);
+       size_t pos2 = find(s2);
+
+       if(pos1==-1 || pos2==-1)
+       {
+           cout<<"Songs not found ";
+           return;
+       }
+
+       songs[pos1].mixSong(songs[pos2]);
+    }
+
+    void sortByName()
+    {
+
+    }
+
+    void save(const char* song, const char* fileName)
+    {
+       int pos = find(song);
+
+       songs[pos].saveTo(fileName);
+    }
 
 };
 

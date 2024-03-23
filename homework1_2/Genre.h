@@ -14,7 +14,6 @@ class Genre {
 public:
     Genre(const char* str);
     void printGenre() const;
-
     void setGenere(const char* str)
     {
         for(int i = 0; str[i] != '\0'; i++ )
@@ -23,6 +22,9 @@ public:
         }
     }
 
+    unsigned char getGenre() const{
+        return genre;
+    }
 
 };
 
