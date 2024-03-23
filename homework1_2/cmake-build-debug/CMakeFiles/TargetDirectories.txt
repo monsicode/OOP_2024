@@ -1,0 +1,3 @@
+C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/homework1_2/cmake-build-debug/CMakeFiles/homework1_2.dir
+C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/homework1_2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/homework1_2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -42,14 +42,27 @@ public:
     void add(int rowNumber)
     {
         countRows++;
-        cout<<"Number in columns is: "<<maxCountColl<<endl;
-        for (int i = 0; i < maxCountColl; ++i)
+
+        for (int i = countRows; i > rowNumber - 1; --i)
         {
-            cout<<"Enter value for column "<<i<<endl;
-            FIELD val;
-            cin>>val;
-            addField(val);
+//            cout<<"Enter value for column "<<i<<endl;
+//            FIELD val;
+//            cin>>val;
+//            addField(val);
+              rows[i] = rows[i - 1];
         }
+        rows[rowNumber - 1].deleteRow();
+        cout<<"Number in columns is: "<<maxCountColl<<endl;
+
+        for (int j = 0; j < maxCountColl; j++) {
+            FIELD val;
+            cout << "Enter data for column: " << j << endl;
+            cin >> val;
+            rows[rowNumber - 1].setFieldAtCol(j, val);
+        }
+
+        isThere[rowNumber - 1] = true;
+        isThere[countRows] = true;
     }
 
 };
