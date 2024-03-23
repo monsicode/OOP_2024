@@ -18,9 +18,7 @@ class Content{
 
 public:
 
-    Content(){
-
-    }
+    Content(){}
 
     Content(const char* fileName){
         readFrom(fileName);
@@ -40,13 +38,12 @@ public:
     }
 
 
-    int getCharPos(int k)
+    int getCharPos(int k) const
     {
       return k / 8;
     }
 
     void changeKBit(int k){
-
 
         for(int i = 0; i < MAX_SIZE_CONTENT; i+=k)
         {
@@ -58,12 +55,16 @@ public:
     }
 
     void mixWith(const Content& str){
-        for (int i = 0; i < MAX_SIZE_CONTENT;++i) {
+        int sizeFirst = strlen(text);
+        int sizeSecond = strlen(str.text);
+
+        int minimum = sizeFirst > sizeSecond ? sizeSecond : sizeFirst;
+        for (int i = 0; i < minimum;++i) {
             text[i] ^= str.getChar(i);
         }
     }
 
-    void saveTo(const char* fileName){
+    void saveTo(const char* fileName) const{
             std::ofstream ofs(fileName, std::ios::binary);
 
             if(!ofs.is_open())

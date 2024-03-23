@@ -15,6 +15,10 @@ class Song{
 
 public:
 
+    Song(){
+
+    };
+
     void addToSong(const char* name, size_t hours, size_t min, size_t seconds, const char* str){
         strcpy(this->name, name);
         time.setHours(hours);
@@ -33,6 +37,7 @@ public:
        std::cout<<name<< " " ;
        time.serialize(std::cout);
        genre.printGenre();
+       //contentSong.printCont();
    }
 
    const char* getName() const
@@ -49,9 +54,18 @@ public:
         contentSong.mixWith(s2.contentSong);
     }
 
-    void saveTo(const char* fileName)
+    void saveTo(const char* fileName) const
     {
         contentSong.saveTo(fileName);
+    }
+
+    void changeKBit(int k)
+    {
+        contentSong.changeKBit(k);
+    }
+
+    const Time& getTime() {
+        return time;
     }
 
 };

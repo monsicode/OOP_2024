@@ -77,7 +77,7 @@ public:
     {
         os << setw(2) << setfill('0') << getHours() << ":"
            << setw(2) << setfill('0') << getMins() <<  ":"
-           << setw(2) << setfill('0') << getSeconds() << std::endl;
+           << setw(2) << setfill('0') << getSeconds()<<" ";
     }
 
 
