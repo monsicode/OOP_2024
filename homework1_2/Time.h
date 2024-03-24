@@ -3,7 +3,12 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-using namespace std;
+
+using std::cout;
+using std::cin;
+using std::setw;
+using std::setfill;
+
 
 constexpr unsigned SECONDS_IN_HOURS = 3600;
 constexpr unsigned SECONDS_IN_MINUTE = 60;
@@ -18,7 +23,7 @@ private:
 
 public:
 
-    Time() : secondsFromMidnight(0);
+    Time();
     Time(unsigned hours, unsigned mins, unsigned seconds);
     unsigned getHours() const;
     unsigned getMins() const;
@@ -30,9 +35,7 @@ public:
     bool setSeconds(unsigned seconds);
 
     unsigned getSecondFromMidnight() const;
-
     void tick();
-
     void serialize(std::ostream& os) const;
 
 };

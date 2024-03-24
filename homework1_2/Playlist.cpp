@@ -1,5 +1,10 @@
 #include "Playlist.h"
 
+bool Playlist::validate(int pos) const
+{
+    return pos != -1;
+}
+
 bool Playlist::validCount() const{
     return countSongs < MAX_SIZE_SONGS;
 }
@@ -33,13 +38,11 @@ void Playlist::insertionSort(bool (*comparator)(Song& a, Song& b)) {
     }
 }
 
-size_t Playlist::getSong(const char* sName) const {
+int Playlist::getSong(const char* sName) const {
 
     for (int i = 0; i < countSongs; ++i) {
         if (strcmp(songs[i].getName(), sName) == 0) {
-            //songs[i].printSong();
             return i;
-            break;
         }
     }
     return -1;
@@ -68,13 +71,14 @@ void Playlist::print() const{
 }
 
 void Playlist::find(const char* sName) const {
-
     for (int i = 0; i < countSongs; ++i) {
         if (strcmp(songs[i].getName(), sName) == 0) {
             songs[i].printSong();
             std::cout << std::endl;
-            break;
+            return;
         }
+        std::cout<<"No song found";
+        return;
     }
 }
 
@@ -94,7 +98,7 @@ void Playlist::mix(const char* s1,const char* s2){
     size_t pos1 = getSong(s1);
     size_t pos2 = getSong(s2);
 
-    if(pos1==-1 || pos2==-1)
+    if(!validate(pos1) || !validate(pos2))
     {
         cout<<"Songs not found ";
         return;
@@ -112,9 +116,15 @@ void Playlist::sortByDuration()
     sortHelper(Criteria::sortByDuration);
 }
 
-void Playlist::save(const char* song, const char* fileName)
+void Playlist::save(const char* song, const char* fileName)const
 {
     int pos = getSong(song);
+
+    if(!validate(pos))
+    {
+        cout<<"No song found\n";
+        return;
+    }
 
     songs[pos].saveTo(fileName);
 }
@@ -123,7 +133,26 @@ void Playlist::read(const char* song,const char* fileName)
 {
     int pos = getSong(song);
 
+    if(!validate(pos))
+    {
+        cout<<"No song found\n";
+        return;
+    }
+
     songs[pos].readSong(fileName);
     songs[pos].printSong();
+}
+
+void Playlist::changeKBit(const char* songName, unsigned bit)
+{
+    int pos = getSong(songName);
+
+    if(!validate(pos))
+    {
+        cout<<"No song found\n";
+        return;
+    }
+
+    songs[pos].changeKBit(bit);
 }
 

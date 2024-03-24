@@ -65,11 +65,3 @@ void Content::saveTo(const char* fileName) const{
 
 }
 
-void Content::addContent(const char* text)
-{
-    strcpy(this->text,text);
-}
-
-void Content::printCont()const{
-    std::cout<<text;
-}

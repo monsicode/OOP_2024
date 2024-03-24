@@ -13,13 +13,13 @@ class Playlist {
     };
 
     bool validCount() const;
-
     void sortHelper(const Criteria& cr);
     void insertionSort(bool (*comparator)(Song& a, Song& b)) ;
+    bool validate(int pos) const;
 
 public:
 
-    size_t getSong(const char* sName) const ;
+    int getSong(const char* sName) const ;
 
     Playlist();
 
@@ -35,9 +35,11 @@ public:
     void sortByName();
     void sortByDuration();
 
-    void save(const char* song, const char* fileName);
-
+    void save(const char* song, const char* fileName) const;
     void read(const char* song,const char* fileName);
+
+    void changeKBit(const char* songName, unsigned bit);
+
 };
 
 

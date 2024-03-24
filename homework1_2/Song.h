@@ -33,6 +33,6 @@ public:
 
     void changeKBit(int k);
 
-    const Time& getTime();
+    const Time& getTime() const;
 
 };

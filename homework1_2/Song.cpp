@@ -18,7 +18,6 @@ void Song::printSong() const
     std::cout<<name<< " " ;
     time.serialize(std::cout);
     genre.printGenre();
-    //contentSong.printCont();
 }
 
 const char* Song::getName() const
@@ -45,6 +44,6 @@ void Song::changeKBit(int k)
     contentSong.changeKBit(k);
 }
 
-const Time& Song::getTime() {
+const Time& Song::getTime() const{
     return time;
 }

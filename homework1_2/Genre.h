@@ -12,7 +12,7 @@ class Genre {
     int getGenreBucket(char genre) const ;
 
 public:
-    
+
     Genre(){}
     Genre(const char* str);
     void printGenre() const;

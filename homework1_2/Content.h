@@ -9,7 +9,6 @@ using namespace constants;
 class Content{
     char text[MAX_SIZE_CONTENT];
 
-
     char getChar(int pos) const;
 
 public:
@@ -28,9 +27,5 @@ public:
     void mixWith(const Content& str);
 
     void saveTo(const char* fileName) const;
-
-    void addContent(const char* text);
-
-    void printCont()const;
 
 };
