@@ -6,5 +6,4 @@ int main() {
      Table table ("file.txt");
      table.print();
 
-
 }

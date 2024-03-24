@@ -1,6 +1,10 @@
 #pragma once
 #include <sstream>
 #include "Row.h"
+#include "Constants.h"
+using namespace constants;
+
+
 
 
 using namespace constants;
@@ -15,7 +19,7 @@ class Table{
 
     void findMaxCountColl();
     void findMaxSpacesForEachColl();
-    void findMaxSpacesForCol(int col);
+    void findMaxSpacesForCol(size_t col);
 
     void getFileAsString(const char* fileName, char* wholeFile) const;
     void removeTabulation(char* wholeFile) const;
@@ -27,17 +31,20 @@ class Table{
     void addField(const char* str);
     void chechIfCharEntity(FIELD& word) const;
 
+//    bool validRow(size_t rowNumber) const;
+//
+//    bool validCol(size_t colNumber) const;
 public:
 
     Table(const char* fileName);
 
     void print() const;
 
-    void remove(int rowNumber);
+    void remove(size_t rowNumber);
 
     void saveTable(const char* fileName) const;
-    void edit(int rowNum, int colNum, const char* newVal);
+    void edit(size_t rowNum, size_t colNum, const char* newVal);
 
-    void add(int rowNumber);
+    void add(size_t rowNumber);
 
 };

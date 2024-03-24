@@ -1,7 +1,14 @@
 #include "Table.h"
-#include "Constants.h"
 
-using namespace constants;
+//bool Table::validRow(size_t rowNumber) const
+//{
+//    return rowNumber < countRows;
+//}
+//
+//bool Table::validCol(size_t colNumber) const
+//{
+//    return colNumber < countRows;
+//}
 
 void Table::findMaxCountColl()
 {
@@ -19,10 +26,16 @@ void Table::findMaxSpacesForEachColl()
     }
 }
 
-void Table::findMaxSpacesForCol(int numCol)
+void Table::findMaxSpacesForCol(size_t numCol)
 {
+//    if(!validCol(numCol))
+//    {
+//        cout<<"Invalid vol number\n";
+//        return;
+//    }
+
     int col = numCol -1;
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < MAX_FIELD_COUNT_IN_ROW; i++)
     {
         if (maxSpacesForEachColl[col] < rows[i].getFieldSizeAtCol(col))
             maxSpacesForEachColl[col] = rows[i].getFieldSizeAtCol(col);
@@ -86,7 +99,8 @@ void Table::getFileAsString(const char* fileName, char* wholeFile) const
 
     if(!ifs.is_open())
     {
-        return ;
+        cout<<"Error opening file\n";
+        return;
     }
 
     char buff[MAX_FILE_ROW_SIZE]; // this is one line from file
@@ -159,7 +173,6 @@ void Table::readTableFromFile(const char* fileName)
         sstream.getline(word, MAX_FIELD_SIZE, '<');
 
         chechIfCharEntity(word);
-
         implementTag(word[1],word + 2);
     }
 
@@ -167,8 +180,14 @@ void Table::readTableFromFile(const char* fileName)
     findMaxSpacesForEachColl();
 };
 
-void Table::remove(int rowNumber)
+void Table::remove(size_t rowNumber)
 {
+//    if(!validRow(rowNumber))
+//    {
+//        cout<<"Invalid row\n";
+//        return;
+//    }
+
     rows[rowNumber - 1].deleteRow();
     isThere[rowNumber - 1] = false;
 
@@ -178,7 +197,7 @@ void Table::remove(int rowNumber)
 
 void Table::saveTable(const char* fileName) const
 {
-    std::ofstream ofs(fileName, std::ios::app);
+    std::ofstream ofs(fileName, std::ios::trunc);
 
     if(!ofs.is_open())
     {
@@ -200,14 +219,26 @@ void Table::saveTable(const char* fileName) const
 }
 
 //optimisation for padding
-void Table::edit(int rowNum, int colNum, const char* newVal)
+void Table::edit(size_t rowNum, size_t colNum, const char* newVal)
 {
+//    if(!validRow(rowNum) || !validCol(colNum))
+//    {
+//        cout<<"Invalid input\n";
+//        return;
+//    }
+
     rows[rowNum - 1].setFieldAtCol(colNum - 1,newVal);
     findMaxSpacesForCol(colNum);
 }
 
-void Table::add(int rowNumber)
+void Table::add(size_t rowNumber)
 {
+//    if(!validRow(rowNumber))
+//    {
+//        cout<<"Invalid row\n";
+//        return;
+//    }
+
     countRows++;
 
     for (int i = countRows; i > rowNumber - 1; --i)

@@ -22,20 +22,20 @@ void Row::addSpecialField(const char* field)
     countCols++;
 }
 
-int Row::getCountCol() const{
+size_t Row::getCountCol() const{
     return countCols;
 }
 
-int Row::getFieldSizeAtCol(int col) const
+size_t Row::getFieldSizeAtCol(size_t col) const
 {
     return strlen(row[col]);
 }
 
-void Row::printField(int col)const{
+void Row::printField(size_t col)const{
     cout<<row[col];
 }
 
-void Row::setFieldAtCol(int numCol, const char* val)
+void Row::setFieldAtCol(size_t numCol, const char* val)
 {
     strcpy(row[numCol],val);
 }

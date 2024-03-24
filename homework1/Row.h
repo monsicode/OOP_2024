@@ -13,7 +13,6 @@ using std::cin;
 
 typedef char FIELD[MAX_FIELD_SIZE];
 
-
 class Row{
     FIELD row[MAX_FIELD_COUNT_IN_ROW];
     int countCols = 0;
@@ -25,16 +24,16 @@ public:
 
     void addSpecialField(const char* field);
 
-    int getCountCol() const;
+    size_t getCountCol() const;
 
-    int getFieldSizeAtCol(int col) const;
+    size_t getFieldSizeAtCol(size_t col) const;
 
-    void printField(int col)const;
+    void printField(size_t col)const;
 
     void saveRow(std::ofstream& ofs) const;
 
     void deleteRow();
 
-    void setFieldAtCol(int numCol, const char* val);
+    void setFieldAtCol(size_t numCol, const char* val);
 
 };
