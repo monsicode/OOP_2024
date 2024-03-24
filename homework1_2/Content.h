@@ -30,7 +30,7 @@ public:
     void saveTo(const char* fileName) const;
 
     void addContent(const char* text);
-    
+
     void printCont()const;
 
 };

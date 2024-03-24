@@ -1,8 +1,13 @@
 #include "Genre.h"
 
-
 void Genre::addGenre(char str){
     int mask = getGenreBucket(str);
+
+    if(mask == -1)
+    {
+        std::cout << "Invalid return genre";
+        return;
+    }
 
     genre |=(1<<mask);
 }
@@ -55,3 +60,16 @@ void Genre::printGenre() const{
         }
     }
 }
+
+void Genre::setGenere(const char* str)
+{
+    for(int i = 0; str[i] != '\0'; i++ )
+    {
+        addGenre(str[i]);
+    }
+}
+
+unsigned char Genre::getGenre() const{
+    return genre;
+}
+
