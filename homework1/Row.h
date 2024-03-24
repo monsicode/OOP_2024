@@ -10,11 +10,12 @@ using namespace constants;
 using std::cout;
 using std::endl;
 using std::cin;
-typedef char FIELD[50];
+
+typedef char FIELD[MAX_FIELD_SIZE];
 
 
 class Row{
-    FIELD row[10];
+    FIELD row[MAX_FIELD_COUNT_IN_ROW];
     int countCols = 0;
 
 public:
@@ -22,12 +23,7 @@ public:
 
     void addField(const char* field);
 
-    //testing
-    void addEmpty();
-
     void addSpecialField(const char* field);
-
-    void printRow() const;
 
     int getCountCol() const;
 
@@ -35,9 +31,7 @@ public:
 
     void printField(int col)const;
 
-    const FIELD& getFieldAtCol(int col) const ;
-
-    void saveRow(std::ofstream& ofs);
+    void saveRow(std::ofstream& ofs) const;
 
     void deleteRow();
 

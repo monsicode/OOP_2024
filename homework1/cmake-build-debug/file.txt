@@ -1,7 +1,7 @@
 <table>
   <tr>
-    <th>N&#97me</th>
-    <th>Age</th>
+    <th>N#97me</th>
+    <th>&#3ge</th>
     <th>Fn</th>
   </tr>
   <tr>

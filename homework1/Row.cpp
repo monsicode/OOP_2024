@@ -13,11 +13,6 @@ void Row::addField(const char* field)
     countCols++;
 }
 
-//testing
-void Row::addEmpty()
-{
-    countCols++;
-}
 
 void Row::addSpecialField(const char* field)
 {
@@ -25,12 +20,6 @@ void Row::addSpecialField(const char* field)
     strcat(row[countCols],field);
     strcat(row[countCols],"*");
     countCols++;
-}
-
-void Row::printRow() const{
-    //cout<<"|";
-    for(int i = 0; i < countCols; i++)
-        cout<<row[i]<<" | ";
 }
 
 int Row::getCountCol() const{
@@ -46,16 +35,12 @@ void Row::printField(int col)const{
     cout<<row[col];
 }
 
-const FIELD& Row::getFieldAtCol(int col) const {
-    return row[col];
-}
-
 void Row::setFieldAtCol(int numCol, const char* val)
 {
     strcpy(row[numCol],val);
 }
 
-void Row::saveRow(std::ofstream& ofs)
+void Row::saveRow(std::ofstream& ofs) const
 {
     ofs <<"  "<< "<tr>" << endl;
     for(int i = 0; i < countCols ; i++)
