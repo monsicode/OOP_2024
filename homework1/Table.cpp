@@ -132,8 +132,7 @@ void Table::chechIfCharEntity(FIELD& word) const{
 
     if(word[strlen(word) -1] =='&')
     {
-        char hashTag;
-        ss>>hashTag;
+        ss.seekg(1,ss.cur);   // we are moving one position futher , bc the get() will be at # symbol
         int ch;
         ss>>ch;
         word[strlen(word) -1] =(char)ch;
