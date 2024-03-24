@@ -39,7 +39,7 @@ void Song::saveTo(const char* fileName) const
     contentSong.saveTo(fileName);
 }
 
-void Song::changeKBit(int k)
+void Song::changeKBit(unsigned k)
 {
     contentSong.changeKBit(k);
 }

@@ -9,7 +9,7 @@ using namespace constants;
 class Content{
     char text[MAX_SIZE_CONTENT];
 
-    char getChar(int pos) const;
+    char getChar(size_t pos) const;
 
 public:
 
@@ -22,7 +22,7 @@ public:
 
     int getCharPos(int k) const;
 
-    void changeKBit(int k);
+    void changeKBit(unsigned k);
 
     void mixWith(const Content& str);
 

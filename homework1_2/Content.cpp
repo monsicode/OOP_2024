@@ -1,10 +1,9 @@
 #include "Content.h"
 
-char Content::getChar(int pos) const
+char Content::getChar(size_t pos) const
 {
     return text[pos];
 }
-
 
 Content::Content(){}
 
@@ -31,7 +30,7 @@ int Content::getCharPos(int k) const
     return k / 8;
 }
 
-void Content::changeKBit(int k){
+void Content::changeKBit(unsigned k){
 
     for(int i = 0; i < MAX_SIZE_CONTENT; i+=k)
     {
@@ -57,7 +56,8 @@ void Content::saveTo(const char* fileName) const{
 
     if(!ofs.is_open())
     {
-        return ;
+        std::cout<<"Error saving";
+        return;
     }
 
     ofs.write((const char*)text, sizeof(text));

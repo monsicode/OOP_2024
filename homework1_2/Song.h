@@ -31,7 +31,7 @@ public:
 
     void saveTo(const char* fileName) const;
 
-    void changeKBit(int k);
+    void changeKBit(unsigned k);
 
     const Time& getTime() const;
 

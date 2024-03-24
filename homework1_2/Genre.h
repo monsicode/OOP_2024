@@ -8,7 +8,7 @@ class Genre {
     unsigned char genre;
 
     void addGenre(char str);
-    char getFromBucket(int index) const;
+    const char* getFromBucket(size_t index) const;
     int getGenreBucket(char genre) const ;
 
 public:

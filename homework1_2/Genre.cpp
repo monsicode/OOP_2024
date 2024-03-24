@@ -12,23 +12,20 @@ void Genre::addGenre(char str){
     genre |=(1<<mask);
 }
 
-char Genre::getFromBucket(int index) const
+const char* Genre::getFromBucket(size_t index) const
 {
     switch(index) {
         case 0:
-            return 'r';
+            return "Rock";
         case 1:
-            return 'p';
+            return "Pop";
         case 2:
-            return 'h';
+            return "Hip-hop";
         case 3:
-            return 'e';
+            return "Electro";
         case 4:
-            return 'j';
-        default:
-            return -1;
+            return "Jazz";
     }
-
 }
 
 int Genre::getGenreBucket(char genre) const {
@@ -56,7 +53,7 @@ Genre::Genre(const char* str)
 void Genre::printGenre() const{
     for (int i = 0; i < 5; ++i) {
         if(genre & (1<<i)){
-            std::cout<<getFromBucket(i);
+            std::cout<<getFromBucket(i)<<" ";
         }
     }
 }
