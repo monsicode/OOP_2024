@@ -10,80 +10,27 @@ class Content{
     char text[MAX_SIZE_CONTENT];
 
 
-    char getChar(int pos) const
-    {
-        return text[pos];
-    }
-
+    char getChar(int pos) const;
 
 public:
 
-    Content(){}
+    Content();
 
-    Content(const char* fileName){
-        readFrom(fileName);
-    }
+    Content(const char* fileName);
 
-    void readFrom(const char* fileName) {
-        std::ifstream ifs(fileName, std::ios::binary | std::ios::in);
-
-        if (!ifs.is_open()) {
-            std::cout << "File is not open!" << std::endl;
-            return;
-        }
-
-        ifs.read(text, MAX_SIZE_CONTENT);
-
-        ifs.close();
-    }
+    void readFrom(const char* fileName);
 
 
-    int getCharPos(int k) const
-    {
-      return k / 8;
-    }
+    int getCharPos(int k) const;
 
-    void changeKBit(int k){
+    void changeKBit(int k);
 
-        for(int i = 0; i < MAX_SIZE_CONTENT; i+=k)
-        {
-            int pos = getCharPos(i);
-            int posInMask = k % 8;
+    void mixWith(const Content& str);
 
-            text[pos] |= (1<<posInMask);
-        }
-    }
+    void saveTo(const char* fileName) const;
 
-    void mixWith(const Content& str){
-        int sizeFirst = strlen(text);
-        int sizeSecond = strlen(str.text);
-
-        int minimum = sizeFirst > sizeSecond ? sizeSecond : sizeFirst;
-        for (int i = 0; i < minimum;++i) {
-            text[i] ^= str.getChar(i);
-        }
-    }
-
-    void saveTo(const char* fileName) const{
-            std::ofstream ofs(fileName, std::ios::binary);
-
-            if(!ofs.is_open())
-            {
-                return ;
-            }
-
-            ofs.write((const char*)text, sizeof(text));
-            ofs.close();
-
-    }
-
-    void addContent(const char* text)
-    {
-        strcpy(this->text,text);
-    }
-
-    void printCont()const{
-        std::cout<<text;
-    }
+    void addContent(const char* text);
+    
+    void printCont()const;
 
 };
