@@ -1,0 +1,6 @@
+# ninja log v5
+1	388	7336976439813485	CMakeFiles/stoychoDynamicSet.dir/main.cpp.obj	f59bf169cedf2838
+8	417	7336976440103533	CMakeFiles/stoychoDynamicSet.dir/DynamicSet.cpp.obj	f43806460ff8aa5a
+417	558	7336976441473859	stoychoDynamicSet.exe	d78cbf91c914b970
+2	345	7336976713252667	CMakeFiles/stoychoDynamicSet.dir/main.cpp.obj	f59bf169cedf2838
+346	439	7336976714159406	stoychoDynamicSet.exe	d78cbf91c914b970

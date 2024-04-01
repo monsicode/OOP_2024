@@ -73,7 +73,7 @@ DynamicSet::~DynamicSet(){
 
 bool DynamicSet::inInterval(unsigned n) const
 {
-      
+
 }
 
 void DynamicSet::print() const{
@@ -81,6 +81,20 @@ void DynamicSet::print() const{
     {
         if(contains(i))
             std::cout<<i<<" ";
+    }
+}
+
+void  DynamicSet::printMem() const{
+    for(int i = 0; i < maxNum; i++)
+    {
+        if(i%8==0 && i!=0)
+            std::cout<<" ";
+
+        std::cout<<contains(i);
+    }
+
+    for(int i = 0; i < 8 - maxNum%8; i++) {
+        std::cout<<0;
     }
 }
 

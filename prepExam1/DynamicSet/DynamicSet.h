@@ -30,6 +30,8 @@ public:
 
     void print() const;
 
+     void printMem() const;
+
     void add(unsigned n);
     void remove(unsigned n);
 
