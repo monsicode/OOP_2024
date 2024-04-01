@@ -1,0 +1,1 @@
+CMakeLists.txt not found in C:\Users\Monika\Documents\OOP_2024\gitBlaBla\OOP_GIT\prepExam1 Select CMakeLists.txt
