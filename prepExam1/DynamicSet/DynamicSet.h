@@ -26,12 +26,14 @@ public:
         return bucketsCount + 1;
     }
 
+    bool inInterval(unsigned n) const;
+
     void print() const;
 
     void add(unsigned n);
     void remove(unsigned n);
 
-    DynamicSet& Union(const DynamicSet& set);
-
+   friend DynamicSet Union(const DynamicSet& set1, const DynamicSet& set2);
+   friend DynamicSet Intersect(const DynamicSet& set1, const DynamicSet& set2);
 
 };

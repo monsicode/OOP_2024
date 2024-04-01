@@ -70,6 +70,12 @@ DynamicSet::~DynamicSet(){
     free();
 };
 
+
+bool DynamicSet::inInterval(unsigned n) const
+{
+      
+}
+
 void DynamicSet::print() const{
     for(int i = 0; i < maxNum; i++)
     {
@@ -92,19 +98,53 @@ void  DynamicSet::remove(unsigned n){
 
 }
 
-DynamicSet& DynamicSet::Union(const DynamicSet& set)
+DynamicSet Union(const DynamicSet& set1, const DynamicSet& set2)
 {
-    unsigned num = std::max(this->maxNum,set.maxNum);
+    unsigned size = std::max(set1.maxNum,set2.maxNum);
+    DynamicSet result(size);
 
-    for(int i = 0; i < getBucketCount(num); i++)
+    unsigned minSize = std::min(set1.bucketsCount,set2.bucketsCount);
+
+    for (int i = 0; i < minSize; ++i)
     {
-        this->buckets[i]|= set.buckets[i];
+        result.buckets[i] = set1.buckets[i] | set2.buckets[i];
     }
 
-    return *this;
+    if(set1.maxNum > set2.maxNum)
+    {
+        for (int i =  minSize; i < set1.bucketsCount; ++i)
+        {
+            result.buckets[i]|= set1.buckets[i];
+        }
+    }
+
+    else if(set1.maxNum < set2.maxNum)
+    {
+        for (int i =  minSize; i < set2.bucketsCount; ++i)
+        {
+            result.buckets[i]|= set2.buckets[i];
+        }
+    }
+
+    return result;
+
 }
 
+DynamicSet Intersect(const DynamicSet& set1, const DynamicSet& set2)
+{
+    unsigned size = std::min(set1.maxNum,set2.maxNum);
+    DynamicSet result(size);
 
+    unsigned minSize = std::min(set1.bucketsCount,set2.bucketsCount);
+
+    for (int i = 0; i < minSize; ++i)
+    {
+        result.buckets[i] = set1.buckets[i] & set2.buckets[i];
+    }
+
+    return result;
+
+}
 
 
 

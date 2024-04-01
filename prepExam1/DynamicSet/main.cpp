@@ -11,12 +11,12 @@ int main() {
 
 
     DynamicSet set2(40);
-    set2.add(3);
-    set2.add(34);
+    set2.add(4);
+    set2.add(7);
     set2.add(6);
 
-    set.Union(set2);
+    DynamicSet set3 = Intersect(set,set2);
+    set3.print();
 
-    set.print();
 
 }
