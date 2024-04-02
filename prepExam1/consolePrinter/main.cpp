@@ -41,8 +41,6 @@ public:
   {
        printer.print(str);
   }
-
-
 };
 
 bool noA(char ch)
