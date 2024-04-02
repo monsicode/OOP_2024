@@ -1,3 +1,0 @@
-C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/prepExam1/consolePrinter/cmake-build-debug/CMakeFiles/consolePrinter.dir
-C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/prepExam1/consolePrinter/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Monika/Documents/OOP_2024/gitBlaBla/OOP_GIT/prepExam1/consolePrinter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
