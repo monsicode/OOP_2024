@@ -55,7 +55,7 @@ int  main(){
     ConsolePrinter pr(noA);
     ConsolePrinter pr1([](char ch){return ch =='l';});
 
-    stringWrapper str({"hellao"},pr1);
+    stringWrapper str({"hellaoolal"},pr1);
 
     str.print();
 
