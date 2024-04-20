@@ -2,11 +2,11 @@
 #include <cstdint>
 #include <iostream>
 #include <stdexcept>
-
-const unsigned BITS = 8;
+#include <fstream>
 
 
 class MultiSet {
+    const unsigned BITS = 8;
 
      uint8_t* data;
 
@@ -24,8 +24,7 @@ class MultiSet {
      void binaryPrinter(unsigned n)const;
 
 public:
-
-    //explicit MultiSet(unsigned n); ? nuzno li e
+    
     MultiSet(unsigned n, unsigned k);
     MultiSet(const MultiSet& other);
     MultiSet& operator=(const MultiSet& other);
@@ -37,6 +36,13 @@ public:
     void print()const;
     void printMem()const;
 
+    void serialize(const char* fileName) const;
+   static MultiSet deserialize(const char* fileName);
+
+    static MultiSet unionSet(const MultiSet& lhs, const MultiSet& rhs);
+    static MultiSet intersectSets(const MultiSet& lhs, const MultiSet& rhs);
+    static MultiSet difference(const MultiSet& lhs, const MultiSet& rhs);
+    static MultiSet complement(const MultiSet& ms);
 
 
 };

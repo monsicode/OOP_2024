@@ -3,13 +3,14 @@
 void MultiSet::copyFrom(const MultiSet& other)
 {
     n=other.n;
+    bitsPerNumber = other.bitsPerNumber;
     countBuckets=other.countBuckets;
     numsInBucket=other.numsInBucket;
     maxOccur=other.maxOccur;
 
     data = new uint8_t [countBuckets];
 
-    for(int i = 0; i < countBuckets; i++)
+    for(int i = 0; i < countBuckets + 1; i++)
         data[i] = other.data[i];
 
 }
@@ -18,10 +19,11 @@ void MultiSet::free()
     delete[] data;
 
     data = nullptr;
-    n=0;
-    countBuckets=0;
-    numsInBucket=0;
-    maxOccur=0;
+    n = 0;
+    countBuckets = 0;
+    numsInBucket = 0;
+    maxOccur = 0;
+    bitsPerNumber = 0;
 }
 
 
@@ -42,7 +44,7 @@ void MultiSet::binaryPrinter(unsigned n)const{
 
 MultiSet::MultiSet(unsigned n, unsigned k){
 
-     this->n = n;
+     this->n = n + 1;
      bitsPerNumber = k;
      maxOccur = (1<<k) - 1; // 2^k - 1
      numsInBucket = BITS / k ;
@@ -68,6 +70,12 @@ MultiSet::~MultiSet(){
 }
 
 unsigned MultiSet::getCount(unsigned n) const{
+
+    if(n >= this->n)
+    {
+        return 0;
+    }
+
     unsigned bucket = getBucket(n);
     unsigned index = getIndex(n);
 
@@ -101,7 +109,7 @@ void MultiSet::add(unsigned n){
 
 
 void MultiSet::print()const{
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n - 1; i++) {
         unsigned count  = getCount(i);
         for (int j = 0; j < count ; j++)
         {
@@ -116,3 +124,112 @@ void MultiSet::printMem()const{
     }
 }
 
+
+void MultiSet::serialize(const char* fileName) const
+{
+     std::ofstream file(fileName, std::ios::binary);
+
+     if(!file.is_open())
+     {
+         throw std::runtime_error("Could not open file");
+     }
+
+     file.write((const char*)&bitsPerNumber, sizeof(unsigned));
+     file.write((const char*)&n, sizeof(unsigned));
+     file.write((const char*)data, sizeof(unsigned) * countBuckets);
+
+     file.close();
+
+}
+
+
+
+MultiSet MultiSet::deserialize(const char* fileName){
+    std::ifstream file(fileName, std::ios::binary);
+
+    if(!file.is_open())
+    {
+        throw std::runtime_error("Could not open file");
+    }
+
+    unsigned n;
+    unsigned bitsPerNumber;
+    unsigned countBuckets;
+
+    file.read((char*)&bitsPerNumber, sizeof(unsigned));
+    file.read((char*)&n, sizeof(unsigned));
+
+    MultiSet result(n, bitsPerNumber);
+
+    file.read((char*)result.data, sizeof(unsigned) * countBuckets);
+
+
+    return result;
+
+    file.close();
+}
+
+
+
+MultiSet MultiSet::unionSet(const MultiSet& lhs, const MultiSet& rhs){
+    unsigned maxN = std::max(lhs.n, rhs.n);
+    MultiSet result(maxN, std::max(lhs.bitsPerNumber, rhs.bitsPerNumber));
+
+        for (int i = 0; i < maxN; i++) {
+        //unsigned countNum = lhs.getCount(i)+ rhs.getCount(i);
+        unsigned countNum = std::max(lhs.getCount(i), rhs.getCount(i));
+
+        for (int j = 0; j < countNum; j++)
+        {
+            result.add(i);
+        }
+    }
+
+    return result;
+}
+
+
+MultiSet MultiSet::intersectSets(const MultiSet& lhs, const MultiSet& rhs){
+    unsigned maxN = std::max(lhs.n, rhs.n);
+    MultiSet result(maxN, std::max(lhs.bitsPerNumber, rhs.bitsPerNumber));
+
+    for (int i = 0; i < maxN; i++) {
+        //unsigned countNum = lhs.getCount(i)+ rhs.getCount(i);
+        unsigned countNum = std::min(lhs.getCount(i), rhs.getCount(i));
+
+        for (int j = 0; j < countNum; j++)
+        {
+            result.add(i);
+        }
+    }
+
+    return result;
+}
+
+MultiSet MultiSet::difference(const MultiSet &lhs, const MultiSet &rhs){
+    unsigned maxN = std::max(lhs.n, rhs.n);
+    MultiSet result(maxN, std::max(lhs.bitsPerNumber, rhs.bitsPerNumber));
+
+    for (int i = 0; i < maxN; i++) {
+        //unsigned countNum = lhs.getCount(i)+ rhs.getCount(i);
+        unsigned countNum = std::max((int)(lhs.getCount(i) - rhs.getCount(i)), 0);
+
+        for (int j = 0; j < countNum; j++)
+        {
+            result.add(i);
+        }
+    }
+
+    return result;
+}
+
+MultiSet MultiSet::complement(const MultiSet& ms){
+
+    MultiSet result(ms.n, ms.bitsPerNumber);
+
+    for (int i = 0; i < ms.n; ++i) {
+       result.data[i] = ~ms.data[i];
+    }
+
+    return result;
+}
