@@ -1,14 +1,10 @@
-//
-// Created by Monika on 4/25/2024.
-//
+#pragma once
+#include <iostream>
+#include "Person.h"
 
-#ifndef STUDENTTEACHER_STUDENT_H
-#define STUDENTTEACHER_STUDENT_H
-
-
-class Student {
-
+class Student : public Person {
+    int fn;
+public:
+    Student(const char* name, int age, int fn);
+     void print() const;
 };
-
-
-#endif //STUDENTTEACHER_STUDENT_H

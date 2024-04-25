@@ -58,7 +58,7 @@ int Person::getAge() const {
 }
 
 void Person::print() const {
-    std::cout << "Name: " << name << " Age: " << age;
+    std::cout << "Name:" << name << " Age:" << age;
 }
 
 void Person::copyFrom(const Person& other) {
