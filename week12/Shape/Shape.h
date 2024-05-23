@@ -3,6 +3,8 @@
 #include <iostream>
 #include <assert.h>
 
+class Circle;
+class Rectange;
 //!!! защо е необходима предварителна декларация на класовете
 class Shape {
 public:
