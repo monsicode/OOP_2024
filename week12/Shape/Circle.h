@@ -21,7 +21,8 @@ public:
     }
 
      bool isPointIn(int x, int y) const override{
-
+       Shape::Point p(x,y);
+       return p.findDist(getPointAtIndex(0)) <=radius;
     }
 
      void whoAmI() const override{

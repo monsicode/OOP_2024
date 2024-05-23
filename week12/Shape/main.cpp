@@ -1,24 +1,27 @@
-#include "Shape.h"
-#include "Circle.h"
-#include "Rectangle.h"
+#pragma once
+#include "CollectionShape.h"
+#include "ShapeFactory.h"
+
 
 using namespace std;
 
 int main() {
  try {
-     Shape *ptr = new Circle(4, 3, 4);
-     Shape *ptr2 = new Rectangle();
-     Shape* ptr3  = ptr->clone();
 
-     ptr->getPointAtIndex(0).print();
-     cout<<endl;
-     ptr->whoAmI();
-     cout<<endl;
-     ptr2->whoAmI();
+     ShapeCollection collection;
 
+     cout<<"Enter num of figures: ";
+     int n;
+     cin>>n;
 
-     delete ptr;
-     delete ptr2;
+     for(int i = 0; i < n; i++)
+     {
+         collection.addFigure(factory());
+     }
+
+     cout<<collection.getCountShapes();
+     collection.printFigure();
+
  }
 
  catch(std::out_of_range)

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <assert.h>
 
+//!!! защо е необходима предварителна декларация на класовете
 class Shape {
 public:
     struct Point{
