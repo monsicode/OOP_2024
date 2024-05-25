@@ -29,8 +29,5 @@ int main() {
     k(obj);
     l(&obj);
     m(&obj);
-
-
-
-
 }
+

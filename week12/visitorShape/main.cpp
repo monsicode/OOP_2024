@@ -14,6 +14,4 @@ int main() {
 
     std::cout<<intersect(ptr2,ptr);
 
-
-
 }
