@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.25)
+project(HW3)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(HW3 main.cpp PartialFunction.cpp PartialFunction.h Pair.hpp FunctionByCriteria.hpp Vector.hpp polymorphic_ptr.hpp polymorphic_container.hpp Conteiner.cpp Conteiner.h MaxFunctions.cpp MaxFunctions.h)
