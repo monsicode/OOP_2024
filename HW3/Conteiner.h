@@ -19,8 +19,10 @@ public:
 
     bool isDefined(uint32_t number) const override;
     uint32_t calculate(uint32_t number) const override;
+     uint32_t operator()(uint32_t number) const override{return 0;}
+     PartialFunction *clone() const {return new CollectionFunctions(*this);}
 
-private:
+protected:
     void free();
     void copyFrom(const CollectionFunctions& other);
     void moveFrom(CollectionFunctions&& other);

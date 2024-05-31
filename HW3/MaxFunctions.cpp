@@ -1,6 +1,6 @@
 #include "MaxFunctions.h"
 
-//MaxFunctions::MaxFunctions(const CollectionFunctions& functions){
+//MaximumPartialFunction::MaximumPartialFunction(const CollectionFunctions& functions){
 //    copyFrom(functions);
 //}
 

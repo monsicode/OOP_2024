@@ -1,6 +1,5 @@
 #include "Conteiner.h"
 
-
 CollectionFunctions::CollectionFunctions() : capacity(0), size(0) {}
 
 CollectionFunctions::CollectionFunctions(const CollectionFunctions& other) {
@@ -28,10 +27,9 @@ CollectionFunctions& CollectionFunctions::operator=(CollectionFunctions&& other)
 }
 
 
-CollectionFunctions::~CollectionFunctions() noexcept {
+CollectionFunctions::~CollectionFunctions() {
     free();
 }
-
 
 void CollectionFunctions::addFunction(const polymorphic_ptr<PartialFunction>& func) {
     functions.pushBack(func);
