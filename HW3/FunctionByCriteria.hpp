@@ -4,22 +4,12 @@
 template <class Function>
 class FunctionByCriteria : public PartialFunction {
     Function fun;
-
-//    struct FunctionResult{
-//        bool isDef;
-//        uint32_t value;
-//    };
-
 public:
-     //FunctionByCriteria() = default;
-     FunctionByCriteria(const Function& fun);
+
+    explicit FunctionByCriteria(const Function& fun);
 
      bool isDefined(uint32_t number) const override;
-     uint32_t calculate(uint32_t number) const override;
-
      uint32_t operator()(uint32_t number) const override;
-     //uint32_t operatorbool(uint32_t number) const override;
-
 
      PartialFunction* clone() const override;
 
@@ -27,36 +17,33 @@ public:
 
 
 template <class Function>
-FunctionByCriteria<Function>::FunctionByCriteria(const Function& fun):fun(fun){}
+FunctionByCriteria<Function>::FunctionByCriteria(const Function& fun):fun(fun){
+
+}
 
 template <class Function>
 bool FunctionByCriteria<Function>::isDefined(uint32_t number) const{
- return true;
-}
-
-template <class Function>
-uint32_t FunctionByCriteria<Function>::calculate(uint32_t number) const{
-    return number;
-}
-
-template <class Function>
-uint32_t FunctionByCriteria<Function>::operator()(uint32_t number) const{
-   return fun(number);
+   return fun(number).first();
 }
 
 //template <class Function>
-//uint32_t FunctionByCriteria<Function>::operatorbool(uint32_t number) const{
-//
+//uint32_t FunctionByCriteria<Function>::calculate(uint32_t number) const{
+//   // return fun(number).getSecond;
+//   return number;
 //}
+
+template <class Function>
+ uint32_t FunctionByCriteria<Function>::operator()(uint32_t number) const{
+   if(!isDefined(number))
+       throw std::logic_error("No value initiallized");
+
+   return fun(number).second();
+}
 
 template <class Function>
 PartialFunction* FunctionByCriteria<Function>::clone() const{
    return new FunctionByCriteria<Function>(*this);
 }
-
-
-
-
 
 
 

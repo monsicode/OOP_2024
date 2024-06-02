@@ -1,59 +1,76 @@
 #include <iostream>
-
 #include "FunctionByCriteria.hpp"
-//#include "Conteiner.h"
+
 #include "MaxFunctions.h"
+#include "MinFunctions.h"
 
 using namespace std;
-
-class Function1 {
-public:
-    uint32_t operator()(uint32_t num) const {
-        return num / 2;
-    }
-};
-class Function2 {
-public:
-    uint32_t operator()(uint32_t num) const {
-        return num  * 2;
-    }
-};
+using Function = Pair<bool, uint32_t> (*)(int);
+using PolimorphicPtr = polymorphic_ptr<PartialFunction>;
 
 int main() {
+    try {
+        Function bebe = [](int x) {
+            Pair<bool,uint32_t> test(1,x * x);
+            return test;
+        };
 
-    Function1 fun1;
-    FunctionByCriteria<Function1> cr(fun1);
+        bebe(4).first();
 
-    Function2 fun2;
-    FunctionByCriteria<Function2> cr2(fun2);
+        PartialFunction* ptr = new FunctionByCriteria<Function>(bebe);
 
-
-    // Създаване на обект от тип MinimumPartialFunction
-    Vector<polymorphic_ptr<PartialFunction>> funcs = { fun1, fun2 };
-    MaximumPartialFunction minFunc(funcs);
-
-    // Проверка на стойността на функцията за някои числа
-    std::cout << "MinimumPartialFunction(2) = " << minFunc.calculate(2) << std::endl;
-    std::cout << "MinimumPartialFunction(5) = " << minFunc.calculate(5) << std::endl;
-
-    // Създаване на обект от тип MaximumPartialFunction
-    MaximumPartialFunction maxFunc(funcs);
-
-
-
-//    Function1 fun1;
-//
-//    FunctionByCriteria<Function1> cr(fun1);
-//
-//    CollectionFunctions col;
-//
-//    col.addFunction(new FunctionByCriteria<Function1>(fun1));
-//    col.addFunction(new FunctionByCriteria<Function1>(fun1));
+        PolimorphicPtr func1 = polymorphic_ptr<PartialFunction>(new FunctionByCriteria(bebe));
+        PolimorphicPtr func2 = polymorphic_ptr<PartialFunction>(new FunctionByCriteria([](int x) {
+            Pair<bool,uint32_t> test2(1,x * 2 - 1 );
+            return test2;
+        }));
+        PolimorphicPtr func3 = polymorphic_ptr<PartialFunction>(new FunctionByCriteria([](int x) {
+            Pair<bool,uint32_t> test2(1,x  + 5);
+            return test2;
+        }));
 
 
+        Vector<polymorphic_ptr<PartialFunction>> funcs;
+        funcs.pushBack(func1);
+        funcs.pushBack(func2);
+        funcs.pushBack(func3);
 
-//    MaximumPartialFunction maxF(col);
-//
-//    maxF.test();
+        MaxFunctions maxFunc(funcs);
+        MinFunctions minFunc(funcs);
+
+     cout<< "This is the maximum result of your function: " << maxFunc(3) <<endl;
+     cout<< "and this is the min result of your functon: " << minFunc(3) <<endl;
+
+    }
+    catch (std::logic_error) {
+        cout << "Function is not defined here";
+    }
+    catch(...)
+    {
+        cout<<"Some error";
+    }
+
 
 }
+
+//        Function bebe = [](int x) {
+//            FunctionResult test(x * 2);
+//            return test;
+//        };
+//
+//        FunctionByCriteria<Function> func(bebe);
+//
+//        ptrConteiner func1 = polymorphic_ptr<PartialFunction>(new FunctionByCriteria(bebe));
+//        ptrConteiner func2 = polymorphic_ptr<PartialFunction>(new FunctionByCriteria([](int x) {
+//            FunctionResult test2(x);
+//            return test2;
+//        }));
+//
+//        Vector<polymorphic_ptr<PartialFunction>> funcs;
+//        funcs.pushBack(func1);
+//        funcs.pushBack(func2);
+//
+//        MaximumPartialFunction maxFunc(funcs);
+//        FunctionResult* kur = new FunctionResult (maxFunc(2));
+//        std::cout << "MaximumPartialFunction(2) = " << kur->getResult() << std::endl;
+//    }

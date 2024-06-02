@@ -24,6 +24,8 @@ public:
     void reset(T* ptr);
     T* release(); // releases the ownership of the pointer
 
+    uint32_t operator()(uint32_t number) const;
+
 private:
     void free();
     void copyFrom(const polymorphic_ptr& other);
@@ -112,6 +114,13 @@ T* polymorphic_ptr<T>::release() {
     ptr = nullptr;
     return temp;
 }
+
+//needs checkout
+//template<typename T>
+//uint32_t polymorphic_ptr<T>::operator()(uint32_t number) const{
+//    return T(number);
+//}
+
 
 template<typename T>
 void polymorphic_ptr<T>::free() {

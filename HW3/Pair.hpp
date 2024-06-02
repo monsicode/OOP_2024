@@ -3,8 +3,8 @@
 
 template<typename T, typename D>
 class Pair {
-    T first;
-    D second;
+    T one;
+    D two;
 
 public:
     Pair(const T& first, const D& second);
@@ -12,10 +12,10 @@ public:
     Pair(const T& first, D&& second);
     Pair(T&& first, const D& second);
 
-    T& getFirst();
-    D& getSecond();
-    const T& getFirst() const;
-    const D& getSecond() const;
+    T& first();
+    D& second();
+    const T& first() const;
+    const D& second() const;
 
     void setFirst(const T& newValue);
     void setFirst(T&& newValue);
@@ -24,58 +24,58 @@ public:
 };
 
 template<typename T, typename D>
-Pair<T,D>::Pair(const T& first, const D& second) : first(first), second(second)
+Pair<T,D>::Pair(const T& first, const D& second) : one(first), two(second)
 {}
 
 
 template<typename T, typename D>
-Pair<T,D>::Pair(T&& first, D&& second) : first(std::move(first)), second(std::move(second))
+Pair<T,D>::Pair(T&& first, D&& second) : one(std::move(first)), two(std::move(second))
 {}
 
 template<typename T, typename D>
-Pair<T,D>::Pair(const T& first, D&& second) : first(first), second(std::move(second))
+Pair<T,D>::Pair(const T& first, D&& second) : one(first), two(std::move(second))
 {}
 
 template<typename T, typename D>
-Pair<T,D>::Pair(T&& first, const D& second) : first(std::move(first)), second(second)
+Pair<T,D>::Pair(T&& first, const D& second) : one(std::move(first)), two(second)
 {}
 
 template<typename T, typename D>
-T& Pair<T, D>::getFirst() {
-    return first;
+T& Pair<T, D>::first() {
+    return one;
 }
 
 template<typename T, typename D>
-D& Pair<T, D>::getSecond() {
-    return second;
+D& Pair<T, D>::second() {
+    return two;
 }
 
 template<typename T, typename D>
-const T& Pair<T, D>::getFirst() const {
-    return first;
+const T& Pair<T, D>::first() const {
+    return one;
 }
 
 template<typename T, typename D>
-const D& Pair<T, D>::getSecond() const {
-    return second;
+const D& Pair<T, D>::second() const {
+    return two;
 }
 
 template<typename T, typename D>
 void Pair<T, D>::setFirst(const T& newValue)   {
-    first = newValue;
+    one = newValue;
 }
 
 template<typename T, typename D>
 void Pair<T, D>::setFirst(T&& newValue)   {
-    first = std::move(newValue);
+    one = std::move(newValue);
 }
 
 template<typename T, typename D>
 void Pair<T, D>::setSecond(const D& newValue) {
-    second = newValue;
+    two = newValue;
 }
 
 template<typename T, typename D>
 void Pair<T, D>::setSecond(D&& newValue) {
-    second = std::move(newValue);
+    two = std::move(newValue);
 }

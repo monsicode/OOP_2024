@@ -6,6 +6,7 @@
 // NOTE!: most of the functions are not needed in the class
 // or do not work as in the original std::vector
 // They were created for testing purposes
+
 template<typename T>
 class Vector {
 private:
@@ -26,11 +27,14 @@ private:
 public:
     Vector();
     Vector(size_t capacity);
+
     Vector(const Vector<T>& other);
-    Vector(Vector<T>&& other);
+    Vector(Vector<T>&& other) noexcept;
+
     Vector<T>& operator=(const Vector<T>& other);
     Vector<T>& operator=(Vector<T>&& other);
-    ~Vector();
+
+    ~Vector() noexcept;
 
     size_t getSize() const;
     size_t getCapacity() const;
@@ -80,7 +84,7 @@ Vector<T>::Vector(const Vector<T>& other) {
     copyFrom(other);
 }
 template<typename T>
-Vector<T>::Vector(Vector<T>&& other) {
+Vector<T>::Vector(Vector<T>&& other) noexcept {
     move(std::move(other));
 }
 
@@ -105,7 +109,7 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& other) {
 }
 
 template<typename T>
-Vector<T>::~Vector() {
+Vector<T>::~Vector() noexcept {
     free();
 }
 
