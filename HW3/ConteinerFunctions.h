@@ -6,9 +6,7 @@
 class ConteinerFunctions : public PartialFunction  {
 protected:
     Vector<polymorphic_ptr<PartialFunction>> functions;
-
 public:
-
     void addFunction(const polymorphic_ptr<PartialFunction>& func);
     void addFunction(polymorphic_ptr<PartialFunction>&& fun);
 

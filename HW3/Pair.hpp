@@ -21,6 +21,9 @@ public:
     void setFirst(T&& newValue);
     void setSecond(const D& newValue);
     void setSecond(D&& newValue);
+
+    Pair<T,D> makePair(const T& one, const D& two);
+
 };
 
 template<typename T, typename D>
@@ -78,4 +81,9 @@ void Pair<T, D>::setSecond(const D& newValue) {
 template<typename T, typename D>
 void Pair<T, D>::setSecond(D&& newValue) {
     two = std::move(newValue);
+}
+
+template<typename T, typename D>
+Pair<T,D> makePair(const T& one, const D& two){
+    return new Pair<T,D>();
 }
