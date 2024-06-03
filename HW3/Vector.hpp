@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <exception>
+#include <iostream>
 
 // NOTE!: most of the functions are not needed in the class
 // or do not work as in the original std::vector
@@ -203,7 +204,7 @@ void Vector<T>::pushAt(T&& element, size_t index) {
 template<typename T>
 T Vector<T>::popBack() {
     if (empty()) {
-        throw std::exception("Vector is empty");
+        throw std::exception();
     }
     // Note: the actual std::vector does NOT lower its capacity on this function
     //downsizeIfNeeded();

@@ -1,54 +1,102 @@
 #include "BinaryFileManager.h"
 
-uint32_t BinaryFileManager::readUint(std::ifstream& file){
+uint32_t BinaryFileManager::readUint(std::ifstream &file) const {
     uint32_t result;
-    file.read((char*)&result, sizeof(uint32_t));
+    file.read((char *) &result, sizeof(uint32_t));
 
     return result;
 }
 
-BinaryFileManager::BinaryFileManager(const char* fileName){
+const char* BinaryFileManager::readString(std::ifstream& file) const {
+//    char buff[1024];
+//    file.read((char*)buff, 1024);
+//    return buff;
+
+//    uint32_t N = readUint(file);;
+//    uint32_t T = readUint(file);
+
+    int length;
+    file.read((char*)&length, sizeof(int));
+
+    char* arr = new char[length];
+    file.read(arr, length);
+
+    return arr;
+}
+
+BinaryFileManager::BinaryFileManager(const char *fileName) {
 
 }
 
-void BinaryFileManager::read(const char* fileName){
+polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
     std::ifstream file(fileName, std::ios::binary);
 
-    if(!file.is_open())
+    if (!file.is_open())
         throw std::ios_base::failure("Error opennig the file");
 
     uint32_t N = readUint(file);;
     uint32_t T = readUint(file);
 
     switch (T) {
-        case 0:{
-            Vector<uint32_t> args(N);
-            Vector<uint32_t> res(N);
+        case 0: {
+            Vector<uint32_t> args;
+            Vector<uint32_t> res;
 
             for (uint16_t i = 0; i < N; ++i) {
-                args[i] = readUint(file);
+                args.pushBack(readUint(file));
             }
             for (uint16_t i = 0; i < N; ++i) {
-                res[i] = readUint(file);
+                res.pushBack(readUint(file));
             }
 
-            CaseZeroFunction functionZero(args,res,N);
-            polymorphic_ptr<PartialFunction>(new FunctionByCriteria(functionZero));
-
-           };
-
+            CaseZeroFunction functionZero(args, res, N);
+            return PolimorphicPtr(new FunctionByCriteria(functionZero));
 
         }
-        case 1:{
 
+        case 1:
+        {
+            Vector<uint32_t> args;
+
+            for (uint16_t i = 0; i < N; ++i) {
+                args.pushBack(readUint(file));
+            }
+
+            CaseOneFunction functionOne(args,N);
+            return PolimorphicPtr(new FunctionByCriteria(functionOne));
         }
+
+        case 2:
+        {
+            Vector<uint32_t> args;
+
+            for (uint16_t i = 0; i < N; ++i) {
+                args.pushBack(readUint(file));
+            }
+
+            CaseTwoFunction functionTwo(args,N);
+            return PolimorphicPtr (new FunctionByCriteria(functionTwo));
+        }
+
+        case 3:
+        {
+            Vector<PolimorphicPtr> functions;
+
+            for (uint16_t i = 0; i < N ; ++i) {
+               const char* path = readString(file);
+               functions.pushBack(read(path));
+            }
+
+            return PolimorphicPtr (new MaxFunctions(functions));
+        }
+
 
     }
 
+    file.close();
 
 }
 
-void BinaryFileManager::write(const char* fileName) const
-{
+void BinaryFileManager::write(const char *fileName) const {
 
 }

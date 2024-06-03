@@ -3,26 +3,29 @@
 //#include "Vector.hpp"
 //#include "Pair.hpp"
 #include "CaseZeroFunction.h"
-#include "MaxFunctions.h.h"
-#include "MinFunctions.h.h"
+#include "CaseOneFunction.h"
+#include "CaseTwoFunction.h"
+#include "MaxFunctions.h"
+#include "MinFunctions.h"
 #include "PartialFunction.h"
 #include "FunctionByCriteria.hpp"
-#include "polymorphic_ptr.hpp"
 
 
 using Function = Pair<bool, uint32_t> (*)(int);
+using PolimorphicPtr = polymorphic_ptr<PartialFunction>;
 
 class BinaryFileManager {
 public:
-
+    BinaryFileManager();
     BinaryFileManager(const char* fileName);
 
-    void read(const char* fileName);
+    polymorphic_ptr<PartialFunction> read(const char* fileName);
     void write(const char* fileName) const;
 
 private:
-    uint32_t readUint(std::ifstream& file);
 
+    uint32_t readUint(std::ifstream& file) const;
+    const char* readString(std::ifstream& file) const;
 };
 
 

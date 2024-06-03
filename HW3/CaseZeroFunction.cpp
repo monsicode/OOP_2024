@@ -8,7 +8,7 @@ CaseZeroFunction::CaseZeroFunction(const Vector<uint32_t> &args, const Vector<ui
 }
 
 Pair<bool, uint32_t> CaseZeroFunction::operator()(uint32_t num) const {
-    Pair<bool, uint32_t> toReturn(false,0);
+    Pair<bool, uint32_t> toReturn(false,-1);
 
     for (int i = 0; i < sizeN; i++)
     {
