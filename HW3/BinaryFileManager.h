@@ -21,11 +21,11 @@ public:
 
     polymorphic_ptr<PartialFunction> read(const char* fileName);
     void write(const char* fileName) const;
-
+    const char* readString(std::ifstream& file) const;
 private:
 
     uint32_t readUint(std::ifstream& file) const;
-    const char* readString(std::ifstream& file) const;
+
 };
 
 

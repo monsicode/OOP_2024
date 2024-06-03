@@ -7,8 +7,8 @@ MinFunctions::MinFunctions(const Vector<polymorphic_ptr<PartialFunction>> &funcs
 }
 
 uint32_t MinFunctions::operator()(uint32_t number) const {
-    if(!isDefined(number))
-        throw std::logic_error("Can't return max result, a functions is not defined!");
+//    if(!isDefined(number))
+//        throw std::logic_error("Can't return min result, a functions is not defined!");
 
     uint32_t minResult = UINT32_MAX;
 

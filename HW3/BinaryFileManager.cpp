@@ -90,7 +90,17 @@ polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
             return PolimorphicPtr (new MaxFunctions(functions));
         }
 
+        case 4:
+        {
+            Vector<PolimorphicPtr> functions;
 
+            for (uint16_t i = 0; i < N ; ++i) {
+                const char* path = readString(file);
+                functions.pushBack(read(path));
+            }
+
+            return PolimorphicPtr (new MinFunctions(functions));
+        }
     }
 
     file.close();

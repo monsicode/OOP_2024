@@ -7,8 +7,8 @@ MaxFunctions::MaxFunctions(const Vector<polymorphic_ptr<PartialFunction>> &funcs
 }
 
 uint32_t MaxFunctions::operator()(uint32_t number) const {
-    if(!isDefined(number))
-        throw std::logic_error("Can't return max result, a functions is not defined!");
+//    if(!isDefined(number))
+//        throw std::logic_error("Can't return max result, a functions is not defined!");
 
     uint32_t maxResult = 0;
 

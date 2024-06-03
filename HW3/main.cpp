@@ -19,17 +19,17 @@ void writeTest(const char *fileName) {
         return;
     }
 
-    int N = 4;
-    file.write((const char *) &N, sizeof(int));
+    int N = 2;
+    int T = 1;
 
-    int T = 2;
+    file.write((const char *) &N, sizeof(int));
     file.write((const char *) &T, sizeof(int));
 
-    int args[4] = {1, 2, 3, 4};
-    // int res[4] = {10,20,30,40};
+    int args[2] = {3,5};
+    //int res[7] = {0, 3, 3, 3, 4, 4, 0};
 
-    file.write((const char *) args, sizeof(int) * 4);
-    //file.write((const char*)res, sizeof(int) * 4);
+    file.write((const char *) args, sizeof(int) * N);
+   // file.write((const char*)res, sizeof(int) * N);
 }
 
 void writeFiles(const char *fileName) {
@@ -40,18 +40,20 @@ void writeFiles(const char *fileName) {
         return;
     }
 
-    int N = 2;
+    int N = 3;
     file.write((const char *) &N, sizeof(int));
 
     int T = 3;
     file.write((const char *) &T, sizeof(int));
 
 
-    const char *arr = "testCaseOne.dat";
-    const char *arr2 = "testCaseTwo.dat";
+    const char *arr = "first.dat";
+    const char *arr2 = "second.dat";
+    const char *arr3 = "third.dat";
 
     int length1 = strlen(arr) + 1;
     int length2 = strlen(arr2) + 1;
+    int length3 = strlen(arr3) + 1;
 
     file.write((const char *) &length1, sizeof(int));
     file.write(arr, length1);
@@ -59,8 +61,12 @@ void writeFiles(const char *fileName) {
     file.write((const char *) &length2, sizeof(int));
     file.write(arr2, length2);
 
+    file.write((const char *) &length3, sizeof(int));
+    file.write(arr3, length3);
+
 
 }
+
 void readFiles(const char *fileName) {
     ifstream file(fileName, std::ios::binary);
 
@@ -113,7 +119,7 @@ void readTest(const char *fileName) {
 //    file.read((char*)res, sizeof(int) * N);
 
     Vector<uint32_t> arg;
-   // Vector<uint32_t> r;
+    //Vector<uint32_t> r;
 
     cout << N << " " << T;
     cout << endl;
@@ -122,7 +128,7 @@ void readTest(const char *fileName) {
         arg.pushBack(args[i]);
     }
     cout << endl;
-
+//
 //    for(int i = 0; i <N; i++ )
 //    {
 //        cout<<res[i]<<" ";
@@ -135,16 +141,33 @@ void readTest(const char *fileName) {
 
 int main() {
 
-   //readTest("testCaseTwo.dat");
+  // writeFiles("func.dat");
 
+//    writeTest("second.dat");
+   // readTest("third.dat");
+
+
+//    int a,b;
+//    cout<<"Enter range: ";
+//    cin>>a>>b;
+
+    cout<<"Your range is: [ "<<0<<" "<<10<<" ] ";
+    cout<<endl;
     try {
         BinaryFileManager manager("TestFiles.dat");
 
-        PolimorphicPtr func = manager.read("TestFiles.dat");
-        cout << func->operator()(10);
+        PolimorphicPtr func = manager.read("func.dat");
+
+        //cout<<func->operator()(3);
+        for(int i = 3; i < 10; i++){
+            cout <<"f("<<i<<") = "<< func->operator()(i);
+            cout<<endl;
+        }
+
     }
     catch (const std::logic_error &err) {
         cout << err.what();
+
     }
 
 }
