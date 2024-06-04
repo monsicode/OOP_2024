@@ -10,21 +10,32 @@ Console::Console(const char *fileName) {
     functionToSolve = manager.read(fileName);
 }
 
-void Console::range(int a, int b) const {
+void Console::rangeAll(int a, int b) const {
     if (!isCorrect(a, b))
         throw std::out_of_range("Your range can't be in negative!");
-
-    std::cout << "Your range is: [ " << a << " " << b << " ] ";
-    std::cout << std::endl;
 
     if (a < 0)
         a = 0; // we make the lower bound to be zero
 
-
+    std::cout << "Result: \n";
     for (int i = a; i < b; i++) {
         if (functionToSolve->isDefined(i)) {
             std::cout << "f(" << i << ") = " << functionToSolve->operator()(i);
             std::cout << std::endl;
         }
     }
+}
+
+void Console::rangeGenerate(int curr, int b) const {
+    if (!isCorrect(curr, b))
+        throw std::out_of_range("Your range can't be in negative!");
+
+    if (curr < 0)
+        curr = 0;
+
+    std::cout << "Result: \n";
+
+    std::cout << "f(" << curr << ") = " << functionToSolve->operator()(curr);
+    std::cout << std::endl;
+
 }

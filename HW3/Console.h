@@ -20,7 +20,8 @@ class Console {
 public:
 
     Console(const char* fileName);
-    void range(int a, int b) const;
+    void rangeAll(int a, int b) const;
+    void rangeGenerate(int a, int b) const;
 };
 
 
