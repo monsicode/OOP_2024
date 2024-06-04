@@ -12,7 +12,7 @@ using Function = Pair<bool, uint32_t> (*)(int);
 using PolimorphicPtr = polymorphic_ptr<PartialFunction>;
 
 class Console {
-    BinaryFileManager manager;
+
     PolimorphicPtr functionToSolve;
 
     bool isCorrect(int a, int b ) const;

@@ -1,20 +1,13 @@
 #include "BinaryFileManager.h"
 
-uint32_t BinaryFileManager::readUint(std::ifstream &file) const {
+uint32_t BinaryFileManager::readUint(std::ifstream &file)  {
     uint32_t result;
     file.read((char *) &result, sizeof(uint32_t));
 
     return result;
 }
 
-const char* BinaryFileManager::readString(std::ifstream& file) const {
-//    char buff[1024];
-//    file.read((char*)buff, 1024);
-//    return buff;
-
-//    uint32_t N = readUint(file);;
-//    uint32_t T = readUint(file);
-
+const char* BinaryFileManager::readString(std::ifstream& file)  {
     int length;
     file.read((char*)&length, sizeof(int));
 
@@ -24,16 +17,13 @@ const char* BinaryFileManager::readString(std::ifstream& file) const {
     return arr;
 }
 
-BinaryFileManager::BinaryFileManager(){}
-
-
 polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
     std::ifstream file(fileName, std::ios::binary);
 
     if (!file.is_open())
-        throw std::ios_base::failure("Error opennig the file");
+        throw std::ios_base::failure("Error opening the file");
 
-    uint32_t N = readUint(file);;
+    uint32_t N = readUint(file);
     uint32_t T = readUint(file);
 
     switch (T) {
@@ -103,9 +93,5 @@ polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
     }
 
     file.close();
-
-}
-
-void BinaryFileManager::write(const char *fileName) const {
 
 }

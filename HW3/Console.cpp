@@ -7,7 +7,7 @@ bool Console::isCorrect(int a, int b) const {
 }
 
 Console::Console(const char *fileName) {
-    functionToSolve = manager.read(fileName);
+    functionToSolve = BinaryFileManager::read(fileName);
 }
 
 void Console::rangeAll(int a, int b) const {
