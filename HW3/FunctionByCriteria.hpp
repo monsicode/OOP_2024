@@ -35,7 +35,7 @@ bool FunctionByCriteria<Function>::isDefined(uint32_t number) const{
 template <class Function>
  uint32_t FunctionByCriteria<Function>::operator()(uint32_t number) const{
    if(!isDefined(number))
-       throw std::logic_error("No value initiallized");
+       throw std::logic_error("The function is not defined");
 
    return fun(number).second();
 }

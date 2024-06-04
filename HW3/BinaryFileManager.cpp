@@ -24,9 +24,8 @@ const char* BinaryFileManager::readString(std::ifstream& file) const {
     return arr;
 }
 
-BinaryFileManager::BinaryFileManager(const char *fileName) {
+BinaryFileManager::BinaryFileManager(){}
 
-}
 
 polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
     std::ifstream file(fileName, std::ios::binary);

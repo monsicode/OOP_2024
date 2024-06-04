@@ -7,16 +7,21 @@ MinFunctions::MinFunctions(const Vector<polymorphic_ptr<PartialFunction>> &funcs
 }
 
 uint32_t MinFunctions::operator()(uint32_t number) const {
-//    if(!isDefined(number))
-//        throw std::logic_error("Can't return min result, a functions is not defined!");
-
     uint32_t minResult = UINT32_MAX;
+    bool flag = false;
 
     for (int i = 0; i < functions.getSize(); i++) {
-        minResult = std::min(minResult,functions[i]->operator()(number));
+        try{
+            minResult = std::min(minResult,functions[i]->operator()(number));
+        }
+        catch(std::logic_error& err)
+        {
+            flag = true;
+            std::cout<<err.what()<<" ";
+        }
     }
 
-    return minResult;
+    return flag ? -1 : minResult;
 }
 
 PartialFunction* MinFunctions::clone() const {

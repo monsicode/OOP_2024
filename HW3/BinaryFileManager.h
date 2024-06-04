@@ -17,7 +17,6 @@ using PolimorphicPtr = polymorphic_ptr<PartialFunction>;
 class BinaryFileManager {
 public:
     BinaryFileManager();
-    BinaryFileManager(const char* fileName);
 
     polymorphic_ptr<PartialFunction> read(const char* fileName);
     void write(const char* fileName) const;

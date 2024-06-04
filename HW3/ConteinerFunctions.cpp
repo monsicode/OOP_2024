@@ -13,11 +13,19 @@ unsigned ConteinerFunctions::getSize() const{
 }
 
 bool ConteinerFunctions::isDefined(uint32_t number) const {
+//    for (size_t i = 0; i < functions.getSize(); ++i) {
+//        if (!functions[i]->isDefined(number)) {
+//            return false;
+//        }
+//    }
+//    return true;
+
     for (size_t i = 0; i < functions.getSize(); ++i) {
         if (!functions[i]->isDefined(number)) {
             return false;
         }
     }
     return true;
+
 }
 
