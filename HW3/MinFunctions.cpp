@@ -8,7 +8,6 @@ MinFunctions::MinFunctions(const Vector<polymorphic_ptr<PartialFunction>> &funcs
 
 uint32_t MinFunctions::operator()(uint32_t number) const {
     uint32_t minResult = UINT32_MAX;
-    bool flag = false;
 
     for (int i = 0; i < functions.getSize(); i++) {
         try{
@@ -16,12 +15,12 @@ uint32_t MinFunctions::operator()(uint32_t number) const {
         }
         catch(std::logic_error& err)
         {
-            flag = true;
             std::cout<<err.what()<<" ";
+            return -1;
         }
     }
 
-    return flag ? -1 : minResult;
+    return minResult;
 }
 
 PartialFunction* MinFunctions::clone() const {

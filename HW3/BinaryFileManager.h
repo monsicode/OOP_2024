@@ -22,4 +22,3 @@ private:
     static uint32_t readUint(std::ifstream& file) ;
 };
 
-

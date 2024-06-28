@@ -19,11 +19,7 @@ Pair<bool, uint32_t> CaseTwoFunction::operator()(uint32_t number) const
     Pair<bool, uint32_t> toReturn(true,0);
 
     if(isIn(number))
-    {
         toReturn.setSecond(1);
-        return toReturn;
-    }
 
     return toReturn;
-
 }

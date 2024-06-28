@@ -8,19 +8,19 @@ MaxFunctions::MaxFunctions(const Vector<polymorphic_ptr<PartialFunction>> &funcs
 
 uint32_t MaxFunctions::operator()(uint32_t number) const {
     uint32_t maxResult = 0;
-    bool flag = false;
+
     for (int i = 0; i < functions.getSize(); i++) {
         try{
             maxResult = std::max(maxResult,functions[i]->operator()(number));
         }
         catch(std::logic_error& err)
         {
-            flag = true;
             std::cout<<err.what()<<" ";
+            return 0;
         }
     }
 
-   return flag ? 0 : maxResult;
+   return maxResult;
 }
 
 PartialFunction* MaxFunctions::clone() const {

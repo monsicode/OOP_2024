@@ -93,5 +93,4 @@ polymorphic_ptr<PartialFunction> BinaryFileManager::read(const char *fileName) {
     }
 
     file.close();
-
 }

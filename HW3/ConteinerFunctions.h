@@ -12,7 +12,6 @@ public:
 
     unsigned getSize() const;
     bool isDefined(uint32_t number) const override;
-
 };
 
 //!  this funcs are missing here so the class will be abstract !
