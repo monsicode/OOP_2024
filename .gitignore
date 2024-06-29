@@ -3,7 +3,7 @@ cmake-build-debug
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
-CMakeList.txt
+CMakeList
 CMakeScripts
 Testing
 Makefile
