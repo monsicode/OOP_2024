@@ -19,9 +19,39 @@ union A{
     char ch;
 };
 
+struct B{
+
+    B(){}
+
+    B(const B& other){
+        std::cout<<"CC of B()";
+    }
+
+    B(B&& other)
+    {
+        std::cout<<"Move of B()";
+    }
+
+};
+
+void g(){
+    std::cout<<" g() ";
+}
+
+static void f(){
+    int a = 5;
+    g();
+   std::cout<<a;
+}
+
+
 int main() {
 
-   baba* ptr = new baba();
+//  B b;
+//  B b2(b);
+//  B b3(std::move(b));
+//  B b4(b);
 
+  f();
 
 }
