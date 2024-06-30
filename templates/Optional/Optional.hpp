@@ -44,19 +44,16 @@ void Optional<T>::copyFrom(const Optional<T>& other) {
 
 template<typename T>
 void Optional<T>::moveFrom(Optional<T>&& other) {
-    if(other.data)
-    {
+    //it's okey the data to be nullptr
         data = other.data;
         other.data = nullptr;
-    }
 }
 
 template<typename T>
 void Optional<T>::free() {
-    if(hasValue())
-    {
+    //Да се delete nullptr няма проблем
+    //if(hasValue())
         delete data;
-    }
 }
 
 template<typename T>
