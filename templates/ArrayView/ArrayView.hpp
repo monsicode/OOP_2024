@@ -43,10 +43,7 @@ bool ArrayView<T>::isEmpty() const{
 
 template<typename T>
 const T& ArrayView<T>::operator[](size_t ind)const{
-    if(begin + ind > end)
-        throw std::out_of_range("Out of range");
-
-    return ArrayView<T>(begin + ind, end);
+    return begin[ind];
 }
 
 
