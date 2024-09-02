@@ -36,7 +36,6 @@ int* getArr(ifstream& ifs)
 
 int* merge(int* firstArr, unsigned sizeFirst, int* secondArr, unsigned sizeSecond)
 {
-    
 
 
 }
